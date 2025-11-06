@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About — HealthSpecialist</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      screens: { sm:'520px', md:'780px', mdx:'900px', lgx:'1200px' },
+      extend: {
+        fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui'] },
+        colors: {
+          blueMain:'#3B82F6', blueHover:'#2563EB', blueSoft:'#60A5FA',
+          ink:'#2B3140', card:'#F6FAFF', muted:'#6B7280'
+        },
+        boxShadow: {
+          card:'0 8px 22px rgba(16,24,40,.06)',
+          btn:'0 10px 24px rgba(59,130,246,.25)',
+          pill:'0 8px 18px rgba(59,130,246,.28)',
+          soft:'0 28px 60px rgba(59,130,246,.08)',
+          blueGlow:'0 24px 64px rgba(59,130,246,.22)'
+        },
+        keyframes:{
+          fade:{'0%':{opacity:'0',transform:'translate(-50%,-6px)'},
+                '100%':{opacity:'1',transform:'translate(-50%,0)'}}
+        },
+        animation:{ fade:'fade .18s ease-out forwards' }
+      }
+    }
+  }
+</script>
+
+<style>
+  .no-focus{-webkit-tap-highlight-color:transparent}
+  .no-focus:focus,.no-focus:focus-visible{outline:none!important;box-shadow:none!important}
+  /* вимикаємо “прилипаючі” hover-ефекти на сенсорних */
+  @media (hover:none){
+    .hover\:-translate-y-\[2px\]:hover{transform:none!important}
+    .hover\:shadow-blueGlow:hover{box-shadow:none!important}
+    .hover\:scale-\[1\.02\]:hover{transform:none!important}
+  }
+
+  /* ===== FAQ slide animation (без JS, дизайн як є) ===== */
+  .faq-anim{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  details[open] .faq-anim{
+    /* підбито під довжину твого абзацу; можна збільшити за потреби */
+    max-height:220px;
+  }
+</style>
+</head>
+<body class="font-sans text-ink bg-white leading-[1.6]">
+
+<!-- ============== HEADER ============== -->
+<header class="bg-blueMain text-white px-4 sm:px-[6%] py-3 sm:py-4 flex items-center justify-between rounded-[12px] m-2 sm:m-3">
+  <div class="flex items-center gap-3">
+    <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 64 64" aria-hidden="true">
+      <circle cx="22" cy="18" r="6" fill="#fff"/>
+      <circle cx="12" cy="28" r="6" fill="#fff"/>
+      <circle cx="32" cy="28" r="6" fill="#fff"/>
+      <circle cx="22" cy="38" r="6" fill="#fff"/>
+    </svg>
+    <div class="text-white font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
+      <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
+    </div>
+  </div>
+
+  <nav class="hidden md:flex flex-1 justify-center gap-9 items-center relative">
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="index.html">HOME</a>
+    <a class="text-white font-semibold text-[13px] no-underline pb-[2px] border-b-2 border-white" href="about.html">ABOUT</a>
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
+
+    <div class="relative inline-flex items-center">
+      <label for="doctors-toggle" class="text-white font-semibold text-[13px] cursor-pointer select-none">DOCTORS</label>
+      <input id="doctors-toggle" type="checkbox" class="peer hidden">
+      <div class="hidden peer-checked:block absolute top-[54px] left-1/2 -translate-x-1/2 w-[240px] z-[100] animate-fade">
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">Phillis K Vance MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">Stanley K Hudson MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">Kevin D Malone MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">Angela S Martin MD</button>
+      </div>
+    </div>
+
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
+  </nav>
+
+  <div class="flex gap-2">
+    <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg:white hover:text-blueMain">LOG IN</button>
+    <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueSoft hover:text:white">SIGN UP</button>
+  </div>
+</header>
+
+<!-- ============== SUBHERO ============== -->
+<section class="py-12 sm:py-16 md:py-20 px-4 sm:px-[8%] bg-white">
+  <div class="w-full">
+    <h1 class="text-[30px] sm:text-[38px] md:text-[52px] font-extrabold mb-2 sm:mb-3">About HealthSpecialist</h1>
+
+    <p class="text-[14px] sm:text-[15px] leading-[1.75] sm:leading-[1.8] text-[#4B5563] max-w-[900px]">
+      Our mission is to combine modern medicine, human care, and convenient access to healthcare — so you always feel healthy and confident. We provide timely, evidence-based care with a personalized approach. From family medicine to cardiology, our team focuses on prevention, early diagnosis, and a smooth, comfortable recovery for every patient. We believe that true health comes from trust, compassion, and continuous support at every stage of your life.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 items-stretch">
+      <article class="bg-card rounded-[14px] shadow-card shadow-soft p-6 sm:p-8 md:p-10 text-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+        <h3 class="sr-only">Emergency line</h3>
+        <div class="text-[28px] sm:text-[30px] md:text-[32px] font-extrabold">24/7</div>
+        <div class="text-[13px] sm:text-[14px] text-muted">Emergency line</div>
+      </article>
+      <article class="bg-card rounded-[14px] shadow-card shadow-soft p-6 sm:p-8 md:p-10 text-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+        <h3 class="sr-only">Patients cared for</h3>
+        <div class="text-[28px] sm:text-[30px] md:text-[32px] font-extrabold">15k+</div>
+        <div class="text-[13px] sm:text-[14px] text-muted">Patients cared for</div>
+      </article>
+      <article class="bg-card rounded-[14px] shadow-card shadow-soft p-6 sm:p-8 md:p-10 text-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+        <h3 class="sr-only">Satisfaction rate</h3>
+        <div class="text-[28px] sm:text-[30px] md:text-[32px] font-extrabold">98%</div>
+        <div class="text-[13px] sm:text-[14px] text-muted">Satisfaction rate</div>
+      </article>
+      <article class="bg-card rounded-[14px] shadow-card shadow-soft p-6 sm:p-8 md:p-10 text-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+        <h3 class="sr-only">Medical specialties</h3>
+        <div class="text-[28px] sm:text-[30px] md:text-[32px] font-extrabold">12+</div>
+        <div class="text-[13px] sm:text-[14px] text-muted">Medical specialties</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHAT WE VALUE ============== -->
+<section class="py-12 sm:py-16 md:py-20 px-4 sm:px-[8%]">
+  <div class="w-full">
+    <h2 class="text-[26px] sm:text-[30px] md:text-[36px] font-extrabold mb-6">What we value</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 items-stretch mx-0 md:mx-[-4%]">
+      <article class="relative bg-white rounded-[16px] shadow-card p-6 sm:p-7 md:p-8 overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow
+                      before:content-[''] before:absolute before:inset-y-0 before:left-0 before:w-2
+                      before:bg-[linear-gradient(180deg,_#3B82F6,_#60A5FA)] before:rounded-l-[16px]">
+        <h3 class="text-[17px] sm:text-[18px] font-extrabold mb-2">Compassion</h3>
+        <p class="text-[#4B5563] text-[15px] leading-[1.7]">We listen first and treat every patient with dignity and respect.</p>
+      </article>
+
+      <article class="relative bg-white rounded-[16px] shadow-card p-6 sm:p-7 md:p-8 overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow
+                      before:content-[''] before:absolute before:inset-y-0 before:left-0 before:w-2
+                      before:bg-[linear-gradient(180deg,_#3B82F6,_#60A5FA)] before:rounded-l-[16px]">
+        <h3 class="text-[17px] sm:text-[18px] font-extrabold mb-2">Clarity</h3>
+        <p class="text-[#4B5563] text-[15px] leading-[1.7]">Plain language, clear plans, and transparent pricing — no surprises.</p>
+      </article>
+
+      <article class="relative bg-white rounded-[16px] shadow-card p-6 sm:p-7 md:p-8 overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow
+                      before:content-[''] before:absolute before:inset-y-0 before:left-0 before:w-2
+                      before:bg-[linear-gradient(180deg,_#3B82F6,_#60A5FA)] before:rounded-l-[16px]">
+        <h3 class="text-[17px] sm:text-[18px] font-extrabold mb-2">Excellence</h3>
+        <p class="text-[#4B5563] text-[15px] leading-[1.7]">Guidelines-based care, continuous training, and quality audits.</p>
+      </article>
+
+      <article class="relative bg-white rounded-[16px] shadow-card p-6 sm:p-7 md:p-8 overflow-hidden transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow
+                      before:content-[''] before:absolute before:inset-y-0 before:left-0 before:w-2
+                      before:bg-[linear-gradient(180deg,_#3B82F6,_#60A5FA)] before:rounded-l-[16px]">
+        <h3 class="text-[17px] sm:text-[18px] font-extrabold mb-2">Access</h3>
+        <p class="text-[#4B5563] text-[15px] leading-[1.7]">Online booking, telemedicine, and results in your secure account.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= OUR STORY ================= -->
+<section class="bg-[#F7FAFF] py-12 sm:py-16 md:py-20 px-4 sm:px-[8%]">
+  <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-[40px] sm:gap-[60px] md:gap-[80px] items-center">
+    <div>
+      <h2 class="text-[26px] sm:text-[30px] md:text-[34px] font-extrabold mb-6 sm:mb-10 text-center">Our story</h2>
+      <ol class="flex flex-col gap-5 sm:gap-7">
+        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+          <div class="bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 w-full md:w-[90%] md:max-w-[680px] transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+            <h3 class="text-[16px] sm:text-[18px] font-extrabold mb-1.5">2016 — The Idea</h3>
+            <p class="text-[#4b5563] text-[15px] sm:text-[16px] leading-[1.6] sm:leading-[1.65]">We started as a small practice focused on rapid primary care and prevention.</p>
+          </div>
+        </li>
+        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+          <div class="bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 w-full md:w-[90%] md:max-w-[680px] transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+            <h3 class="text-[16px] sm:text-[18px] font-extrabold mb-1.5">2019 — Expansion</h3>
+            <p class="text-[#4b5563] text-[15px] sm:text-[16px] leading-[1.6] sm:leading-[1.65]">Opened diagnostic and rehabilitation units to support full recovery cycles.</p>
+          </div>
+        </li>
+        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+          <div class="bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 w-full md:w-[90%] md:max-w-[680px] transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+            <h3 class="text-[16px] sm:text-[18px] font-extrabold mb-1.5">2023 — Digital first</h3>
+            <p class="text-[#4b5563] text-[15px] sm:text-[16px] leading-[1.6] sm:leading-[1.65]">Launched online booking, patient portal, and same-day telemedicine.</p>
+          </div>
+        </li>
+        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+          <div class="bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 w-full md:w-[90%] md:max-w-[680px] transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+            <h3 class="text-[16px] sm:text-[18px] font-extrabold mb-1.5">Today — Multispecialty</h3>
+            <p class="text-[#4b5563] text-[15px] sm:text-[16px] leading-[1.6] sm:leading-[1.65]">Cardiology, internal medicine, family medicine, and physical therapy under one roof.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="relative flex justify-center items-center">
+      <img src="images/Ambulans2.svg" alt="Our team at HealthSpecialist"
+        class="w-[360px] sm:w-[560px] md:w-[900px] max-w-none h-auto object-contain
+         relative md:top-[40px] md:left-[30px] transition-transform duration-300 hover:scale-[1.03]">
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ (з анімацією, дизайн незмінний) ============== -->
+<section class="py-12 sm:py-16 md:py-20 px-4 sm:px-[8%]">
+  <div class="w-full">
+    <h2 class="text-[26px] sm:text-[32px] md:text-[36px] font-extrabold mb-3 sm:mb-4">Frequently asked questions</h2>
+
+    <div class="grid gap-3 sm:gap-[18px] mt-3 sm:mt-[10px]">
+      <details open class="group bg-white rounded-[12px] shadow-card p-5 sm:p-6 transition-all duration-200 hover:shadow-blueGlow">
+        <summary class="cursor-pointer font-bold text-[17px] sm:text-[18px] select-none outline-none">How do I book an appointment?</summary>
+        <div class="faq-anim">
+          <p class="mt-2 text-[#6b7280] text-[15px]">Use online booking in your account or call our front desk. Same-day slots appear at 08:00.</p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-[12px] shadow-card p-5 sm:p-6 transition-all duration-200 hover:shadow-blueGlow">
+        <summary class="cursor-pointer font-bold text-[17px] sm:text-[18px] select-none outline-none">Do you offer telemedicine?</summary>
+        <div class="faq-anim">
+          <p class="mt-2 text-[#6b7280] text-[15px]">Yes. We provide secure video consultations for follow-ups and non-urgent visits.</p>
+        </div>
+      </details>
+
+      <details class="group bg-white rounded-[12px] shadow-card p-5 sm:p-6 transition-all duration-200 hover:shadow-blueGlow">
+        <summary class="cursor-pointer font-bold text-[17px] sm:text-[18px] select-none outline-none">How will I get my test results?</summary>
+        <div class="faq-anim">
+          <p class="mt-2 text-[#6b7280] text-[15px]">Your results are published in your secure online account and sent as notifications.</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="mt-[48px] sm:mt-[72px] md:mt-[88px] bg-[#F7FAFF]">
+  <div class="px-4 sm:px-[6%] py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.25fr_1fr_1fr_1fr] gap-10 sm:gap-14 md:gap-20 items-start">
+    <div>
+      <div class="flex items-center gap-3">
+        <svg class="w-[30px] h-[30px] sm:w-[34px] sm:h-[34px]" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="22" cy="18" r="6" fill="#3B82F6"/>
+          <circle cx="12" cy="28" r="6" fill="#60A5FA"/>
+          <circle cx="32" cy="28" r="6" fill="#3B82F6"/>
+          <circle cx="22" cy="38" r="6" fill="#60A5FA"/>
+        </svg>
+        <div class="font-extrabold text-[20px] sm:text-[22px]">
+          <b class="text-blueMain">Health</b><span class="text-blueSoft font-bold">Specialist</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">SERVICES</h6>
+      <ul class="list-none">
+        <li class="text-[13px] text-ink/92 my-[10px]">Family Medicine</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Internal Medicine</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Cardiology</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Physical Therapy</li>
+      </ul>
+    </div>
+
+    <div>
+      <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">DOCTORS</h6>
+      <ul class="list-none">
+        <li class="text-[13px] text-ink/92 my-[10px]">Phillis K Vance MD</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Stanley K Hudson  MD</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Kevin D Malone MD</li>
+        <li class="text-[13px] text-ink/92 my-[10px]">Angela S Martin MD</li>
+      </ul>
+    </div>
+
+    <div>
+      <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">CONTACT</h6>
+      <button
+        class="inline-flex items-center gap-2 h-11 px-[20px]
+               bg-blueMain text-white rounded-[10px] font-extrabold text-[14px]
+               shadow-btn transition-all duration-200 will-change-transform
+               hover:bg-blueHover hover:scale-[1.02] active:scale-[1.0]
+               hover:saturate-125 hover:shadow-blueGlow"
+        type="button" aria-label="Call (404)123 - 4567">
+        <svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12 .86.34 1.7.64 2.5a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.67-1.25a2 2 0 0 1 2.11-.45c.8 .3 1.64 .52 2.5 .64A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        (404)123 - 4567
+      </button>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
