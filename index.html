@@ -67,12 +67,9 @@
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<header
-  class="bg-blueMain text-white rounded-[12px] m-2 sm:m-3
-         px-4 sm:px-[6%] py-3 sm:py-4
-         md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0">
-
-  <!-- ЛОГО зліва -->
+<header class="bg-blueMain text-white px-4 sm:px-[6%] py-3 sm:py-4 rounded-[12px] m-2 sm:m-3
+               md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
+  <!-- ЛОГО -->
   <div class="flex items-center gap-3">
     <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 64 64" aria-hidden="true">
       <circle cx="22" cy="18" r="6" fill="#fff"/>
@@ -80,56 +77,57 @@
       <circle cx="32" cy="28" r="6" fill="#fff"/>
       <circle cx="22" cy="38" r="6" fill="#fff"/>
     </svg>
-    <div class="font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
+    <div class="text-white font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
       <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
     </div>
   </div>
 
-  <!-- МЕНЮ по центру (лише desktop) -->
-  <nav class="hidden md:flex justify-center items-center gap-9">
+  <!-- НАВІГАЦІЯ DESKTOP (по центру, без відступів зверху) -->
+  <nav class="hidden md:flex justify-center gap-9 items-center">
     <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
     <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
     <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
 
-    <div class="relative">
+    <div class="relative inline-flex items-center">
       <label for="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none">DOCTORS</label>
       <input id="doctors-toggle-desktop" type="checkbox" class="peer hidden">
       <div class="hidden peer-checked:block absolute top-[34px] left-1/2 -translate-x-1/2 w-[240px] z-[100] animate-fade">
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition hover:bg-white hover:text-blueMain hover:border-blueMain">Phillis K Vance MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition hover:bg-white hover:text-blueMain hover:border-blueMain">Stanley K Hudson MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition hover:bg-white hover:text-blueMain hover:border-blueMain">Kevin D Malone MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition hover:bg-white hover:text-blueMain hover:border-blueMain">Angela S Martin MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
+        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
       </div>
     </div>
 
     <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
   </nav>
 
-  <!-- КНОПКИ праворуч (вигляд як на скріні) -->
+  <!-- КНОПКИ AUTH (праворуч) -->
   <div class="flex gap-2 justify-end">
-    <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition hover:bg-white hover:text-blueMain hover:border-white">LOG IN</button>
-    <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition hover:bg-blueHover hover:text-white">SIGN UP</button>
+    <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
+    <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03] hover:text-white">SIGN UP</button>
   </div>
 
-  <!-- МОБІЛЬНЕ меню (окремим рядком; на desktop приховано) -->
-  <nav class="md:hidden col-span-full mt-2 -mb-1 overflow-x-auto whitespace-nowrap flex items-center gap-6 pb-1">
-    <a class="text-white font-semibold text-[13px] no-underline" href="#">HOME</a>
-    <a class="text-white font-semibold text-[13px] no-underline" href="about.html">ABOUT</a>
-    <a class="text-white font-semibold text-[13px] no-underline" href="#">SERVICES</a>
+  <!-- ТА САМА НАВІГАЦІЯ ДЛЯ МОБІЛЬНИХ (нижче, скролиться по осі X) -->
+  <nav class="mobile-nav md:hidden col-span-full mt-3 -mb-2 overflow-x-auto whitespace-nowrap flex items-center gap-6 pb-2">
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
     <div class="relative inline-block">
       <label for="doctors-toggle-mobile" class="text-white font-semibold text-[13px] cursor-pointer select-none">DOCTORS</label>
       <input id="doctors-toggle-mobile" type="checkbox" class="peer hidden">
-      <div class="hidden peer-checked:block absolute left-1/2 -translate-x-1/2 top-[28px] w-[240px] z-[100]">
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px]">Phillis K Vance MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px]">Stanley K Hudson MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px]">Kevin D Malone MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] px-4 py-3 my-1.5 rounded-[12px]">Angela S Martin MD</button>
+      <div class="hidden peer-checked:block absolute left-0 top-[28px] w-[240px] z-[100]">
+        <div class="absolute left-1/2 -translate-x-1/2 w-[240px]">
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Phillis K Vance MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Stanley K Hudson MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Kevin D Malone MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Angela S Martin MD</button>
+        </div>
       </div>
     </div>
-    <a class="text-white font-semibold text-[13px] no-underline" href="#">CONTACT</a>
+    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
   </nav>
 </header>
-
 
 
 <!-- ===== HERO ===== -->
@@ -343,3 +341,4 @@
 
 </body>
 </html>
+
