@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HealthSpecialist — Desktop</title>
+<title>HealthSpecialist — Home</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -12,181 +12,231 @@
 <script>
   tailwind.config = {
     theme: {
-      screens: {
-        sm: '520px',
-        md: '780px',
-        mdx: '900px',
-        lgx: '1200px',
-      },
+      screens: { sm:'520px', md:'780px', mdx:'900px', lgx:'1200px' },
       extend: {
         fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui'] },
         colors: {
-          blueMain: '#3B82F6',
-          blueHover: '#2563EB',
-          blueSoft: '#60A5FA',
-          ink: '#2B3140',
+          blueMain:'#3B82F6', blueHover:'#2563EB', blueSoft:'#60A5FA',
+          ink:'#2B3140', card:'#F6FAFF', muted:'#6B7280'
         },
         boxShadow: {
-          card: '0 8px 22px rgba(16,24,40,.06)',
-          btn: '0 10px 24px rgba(59,130,246,.25)',
-          pill: '0 8px 18px rgba(59,130,246,.28)',
-          navbtn: '0 6px 16px rgba(0,0,0,.15)',
+          card:'0 8px 22px rgba(16,24,40,.06)',
+          btn:'0 10px 24px rgba(59,130,246,.25)',
+          pill:'0 8px 18px rgba(59,130,246,.28)',
+          soft:'0 28px 60px rgba(59,130,246,.08)',
+          blueGlow:'0 24px 64px rgba(59,130,246,.22)',
+          navbtn:'0 6px 16px rgba(0,0,0,.15)',
         },
-        keyframes: {
-          fade: {
-            '0%': { opacity: '0', transform: 'translate(-50%,-6px)' },
-            '100%': { opacity: '1', transform: 'translate(-50%,0)' }
-          }
+        keyframes:{
+          fade:{'0%':{opacity:'0',transform:'translate(-50%,-6px)'},
+                '100%':{opacity:'1',transform:'translate(-50%,0)'} }
         },
-        animation: { fade: 'fade .18s ease-out forwards' }
+        animation:{ fade:'fade .18s ease-out forwards' }
       }
     }
   }
 </script>
 
 <style>
-  .dragging { cursor: grabbing !important; }
-  #doctorsScroll::-webkit-scrollbar { display: none; }
-  .mobile-nav::-webkit-scrollbar { display: none; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  /* базові утиліти — як на about */
+  .site{min-width:300px;width:100%;margin:0 auto}
 
-  .no-focus { -webkit-tap-highlight-color: transparent; }
-  .no-focus:focus,
-  .no-focus:focus-visible { outline: none !important; box-shadow: none !important; }
+  .no-focus{-webkit-tap-highlight-color:transparent}
+  .no-focus:focus,.no-focus:focus-visible{outline:none!important;box-shadow:none!important}
+
+  .mobile-nav::-webkit-scrollbar{display:none}
+  .no-scrollbar::-webkit-scrollbar{display:none}
+  .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
 
   @media (hover:none){
-    .hover\:scale-\[1\.03\]:hover,
-    .hover\:scale-\[1\.02\]:hover { transform: none !important; }
-    .hover\:shadow-btn:hover { box-shadow: none !important; }
-    .hover\:bg-blueHover:hover { background-color: inherit !important; }
-    .hover\:translate-y-\[2px\]:hover,
-    .active\:translate-y-\[3px\]:active { transform: none !important; }
+    .hover\:-translate-y-\[1px\]:hover{transform:none!important}
+    .hover\:shadow-btn:hover{box-shadow:none!important}
+    .hover\:scale-\[1\.03\]:hover{transform:none!important}
+  }
+
+  .dragging{cursor:grabbing!important}
+  .wrap-anywhere{overflow-wrap:anywhere}
+
+  .panel-enter{opacity:0; transform:translateY(6px)}
+  .panel-enter-active{opacity:1; transform:translateY(0); transition:opacity .2s ease, transform .2s ease}
+  .panel-leave{opacity:1; transform:translateY(0)}
+  .panel-leave-active{opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease}
+
+  /* Дуже вузькі екрани */
+  @media (max-width:360px){
+    .px-4{padding-left:12px!important; padding-right:12px!important}
+    .py-3{padding-top:10px!important; padding-bottom:10px!important}
+    .brand-tight{font-size:16px!important}
+  }
+
+  /* Компактний хедер 780–945 px — як на about */
+  @media (min-width:780px) and (max-width:945px){
+    header.site{padding-left:4vw; padding-right:4vw}
+    .brand-tight{font-size:18px; letter-spacing:.1px}
+    .brand-tight span{white-space:nowrap}
+    nav.header-nav{gap:24px}
+    nav.header-nav a{font-size:12px}
+    .right-cta{gap:6px}
+    .btn-compact{height:36px; padding:6px 12px; font-size:12px}
   }
 </style>
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<!-- ===== STICKY HEADER WRAP ===== -->
+<!-- ===== STICKY HEADER (ідентичний about, прямі кути) ===== -->
 <div class="sticky top-0 z-50">
-  <header class="bg-blueMain text-white px-4 sm:px-[6%] py-3 sm:py-4 rounded-b-[12px] md:rounded-[12px] md:m-3">
+  <header
+    class="site bg-blueMain text-white rounded-none md:rounded-none
+           w-full box-border
+           px-[4vw] sm:px-[5vw] md:px-[6vw]
+           py-3 sm:py-4
+           flex items-center justify-between
+           md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0 overflow-x-visible">
 
-    <!-- top row: logo + desktop nav + right buttons + burger -->
-    <div class="md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
-      <!-- Logo -->
-      <div class="flex items-center gap-3">
-        <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 64 64" aria-hidden="true">
-          <circle cx="22" cy="18" r="6" fill="#fff"/>
-          <circle cx="12" cy="28" r="6" fill="#fff"/>
-          <circle cx="32" cy="28" r="6" fill="#fff"/>
-          <circle cx="22" cy="38" r="6" fill="#fff"/>
+    <!-- Лого -->
+    <div class="flex items-center gap-3 min-w-0">
+      <svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="22" cy="18" r="6" fill="#fff"/>
+        <circle cx="12" cy="28" r="6" fill="#fff"/>
+        <circle cx="32" cy="28" r="6" fill="#fff"/>
+        <circle cx="22" cy="38" r="6" fill="#fff"/>
+      </svg>
+      <div class="brand-tight font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
+        <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
+      </div>
+    </div>
+
+    <!-- Навігація (desktop) -->
+    <nav class="header-nav hidden md:flex justify-center items-center gap-9">
+      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="index.html">HOME</a>
+      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
+      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
+
+      <div class="relative inline-flex items-center">
+        <a href="#" id="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none hover:opacity-90">DOCTORS</a>
+        <div id="doctorsDropdownDesktop"
+             class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(240px,92vw)] z-[100] animate-fade">
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
+          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+        </div>
+      </div>
+
+      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
+    </nav>
+
+    <!-- Правий блок: кнопки + бургер -->
+    <div class="right-cta flex gap-2 justify-end items-center">
+      <div class="hidden md:flex gap-2">
+        <button class="btn-compact px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
+        <button class="btn-compact px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:text-white hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
+      </div>
+
+      <!-- Бургер -->
+      <button id="mobile-menu-button"
+              class="md:hidden text-white no-focus flex items-center justify-center w-10 h-10 rounded-[10px] active:scale-[.98]"
+              aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m0 6H8"></path>
         </svg>
-        <div class="text-white font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
-          <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
-        </div>
-      </div>
-
-      <!-- Desktop nav -->
-      <nav class="hidden md:flex justify-center gap-9 items-center">
-        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
-        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
-        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
-
-        <!-- DOCTORS desktop dropdown -->
-        <div class="relative inline-flex items-center">
-          <a href="#" id="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none hover:opacity-90">DOCTORS</a>
-          <div id="doctorsDropdownDesktop" class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[240px] z-[100]">
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
-          </div>
-        </div>
-
-        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
-      </nav>
-
-      <!-- Right CTA (desktop) + burger (mobile) -->
-      <div class="flex gap-2 justify-end items-center">
-        <!-- desktop buttons -->
-        <div class="hidden md:flex gap-2">
-          <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
-          <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03] hover:text-white">SIGN UP</button>
-        </div>
-        <!-- burger button -->
-        <button id="mobile-menu-button" class="md:hidden text-white no-focus" aria-label="Open menu">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m0 6H8"></path>
-          </svg>
-        </button>
-      </div>
+      </button>
     </div>
-
-    <!-- Mobile menu, білий блок під шапкою -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white text-ink rounded-[12px] mt-3 shadow-navbtn overflow-hidden">
-      <ul class="flex flex-col py-2">
-        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">HOME</a></li>
-        <li><a href="about.html" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">ABOUT</a></li>
-        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">SERVICES</a></li>
-        <li>
-          <details class="group">
-            <summary class="px-4 py-3 text-[14px] font-semibold cursor-pointer list-none hover:bg-blue-50 select-none">
-              DOCTORS
-            </summary>
-            <div class="px-4 pb-3 pt-1">
-              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Phillis K Vance MD</a>
-              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Stanley K Hudson MD</a>
-              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Kevin D Malone MD</a>
-              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Angela S Martin MD</a>
-            </div>
-          </details>
-        </li>
-        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">CONTACT</a></li>
-      </ul>
-      <div class="flex flex-col gap-3 p-4 border-t border-gray-100">
-        <button class="w-full bg-blueMain text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
-        <button class="w-full bg-gray-100 text-[#2B3140] px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide">LOG IN</button>
-      </div>
-    </div>
-
-    
   </header>
 </div>
 
-<!-- ===== HERO ===== -->
-<section class="px-4 sm:px-[6%] py-10 sm:py-[72px] flex flex-col md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
+<!-- ===== FULLSCREEN MOBILE OVERLAY MENU (як на about) ===== -->
+<div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
+  <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
+
+  <nav id="overlay-panel"
+       class="absolute inset-0 bg-blueMain text-white flex flex-col opacity-0 panel-enter">
+    <!-- топ-бар -->
+    <div class="site flex items-center justify-between px-4 sm:px-[6%] py-3 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <svg class="w-7 h-7" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="22" cy="18" r="6" fill="#fff"/>
+          <circle cx="12" cy="28" r="6" fill="#E8F0FF"/>
+          <circle cx="32" cy="28" r="6" fill="#fff"/>
+          <circle cx="22" cy="38" r="6" fill="#E8F0FF"/>
+        </svg>
+        <div class="font-extrabold text-[18px]"><b class="text-white">Health</b><span class="text-white/80 font-bold">Specialist</span></div>
+      </div>
+      <button id="overlay-close" class="no-focus w-10 h-10 flex items-center justify-center rounded-[10px]" aria-label="Close menu">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- контент -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="site px-4 sm:px-[6%] py-6">
+        <div class="mx-auto">
+          <ul class="flex flex-col gap-4 sm:gap-5">
+            <li><a href="index.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">HOME</a></li>
+            <li><a href="about.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">ABOUT</a></li>
+            <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">SERVICES</button></li>
+            <li>
+              <details class="group">
+                <summary class="menu-link px-2 py-2 text-[16px] font-semibold cursor-pointer list-none rounded-[10px] select-none">
+                  DOCTORS
+                </summary>
+                <div class="px-2 pt-2">
+                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</a>
+                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</a>
+                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</a>
+                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</a>
+                </div>
+              </details>
+            </li>
+            <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
+          </ul>
+
+          <div class="mt-6 grid grid-cols-2 gap-2">
+            <button class="w-full bg-white text-blueMain px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
+            <button class="w-full bg-white/15 text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 border border-white hover:bg-white/20 no-focus">LOG IN</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<!-- ===== HERO (контент залишено як був, адаптивність через clamp/брейкпоінти) ===== -->
+<section class="site px-4 sm:px-[6%] py-10 sm:py-[72px] flex flex-col md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
   <div class="md:max-w-[52%] pl-0 md:pl-10">
-    <h1 class="text-[32px] sm:text-[44px] md:text-[56px] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-0.2px] sm:tracking-[-0.3px] md:tracking-[-0.4px] text-[#232838] mb-[18px] sm:mb-[22px] md:mb-[26px]">
+    <h1 class="text-[clamp(28px,6vw,56px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-0.2px] sm:tracking-[-0.3px] md:tracking-[-0.4px] text-[#232838] mb-[18px] sm:mb-[22px] md:mb-[26px]">
       Dedicated Health<br class="hidden sm:block">Care Specialists
     </h1>
-    <p class="text-[14px] sm:text-[15px] text-[#6c7a90] mb-[14px] sm:mb-[18px]">
+    <p class="text-[clamp(14px,1.5vw,15px)] text-[#6c7a90] mb-[14px] sm:mb-[18px]">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
-    <p class="text-[14px] sm:text-[15px] text-[#6c7a90] mb-[14px] sm:mb-[18px]">
+    <p class="text-[clamp(14px,1.5vw,15px)] text-[#6c7a90] mb-[14px] sm:mb-[18px]">
       Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
     <a href="#" class="inline-block bg-blueMain text-white px-[22px] sm:px-[26px] py-[12px] sm:py-[14px] rounded-[10px] font-bold no-underline transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">LEARN MORE</a>
   </div>
   <div class="flex-1 flex items-center justify-center">
     <img src="images/ambulance.png" alt="Ambulance"
-         class="w-[320px] sm:w-[560px] md:w-[720px] max-w-full ml-auto rounded-[12px]">
+         class="w-[min(720px,92vw)] max-w-full ml-auto rounded-[12px]">
   </div>
 </section>
 
-<!-- ===== 3 CARDS ===== -->
-<section class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 md:gap-12 px-4 sm:px-[6%] py-10 sm:py-14">
+<!-- ===== 3 CARDS (без змін у дизайні, адаптивність збережена) ===== -->
+<section class="site grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 md:gap-12 px-4 sm:px-[6%] py-10 sm:py-14">
   <h2 class="sr-only">Key information cards</h2>
 
   <article class="bg-[#F6FAFF] rounded-[14px] p-6 sm:p-8 md:p-10 shadow-card text-left">
-    <h3 class="text-[20px] sm:text-[22px] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">EMERGENCIES</h3>
-    <p class="text-[14px] text-[#6c7a90] mb-4 sm:mb-6">
+    <h3 class="text-[clamp(18px,2.1vw,22px)] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">EMERGENCIES</h3>
+    <p class="text-[clamp(14px,1.45vw,14px)] text-[#6c7a90] mb-4 sm:mb-6">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
     <button class="mx-auto block bg-blueMain text-white rounded-[10px] px-[20px] sm:px-[22px] py-[12px] text-[13px] font-bold transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">MORE INFO</button>
   </article>
 
   <article class="bg-[#F6FAFF] rounded-[14px] p-6 sm:p-8 md:p-10 shadow-card text-left">
-    <h3 class="text-[20px] sm:text-[22px] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">OPERATING HOURS</h3>
+    <h3 class="text-[clamp(18px,2.1vw,22px)] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">OPERATING HOURS</h3>
     <div class="max-w-[520px] mx-auto mb-4 sm:mb-6 text-[13px]">
       <p class="flex justify-between my-3 text-[#344051]"><span>MONDAY - FRIDAY</span><span>08:00–18:00</span></p>
       <p class="flex justify-between my-3 text-[#344051] border-t border-[#d9e0ea] pt-4"><span>SATURDAY</span><span>10:00–16:00</span></p>
@@ -196,17 +246,17 @@
   </article>
 
   <article class="bg-[#F6FAFF] rounded-[14px] p-6 sm:p-8 md:p-10 shadow-card text-left">
-    <h3 class="text-[20px] sm:text-[22px] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">TEST RESULTS</h3>
-    <p class="text-[14px] text-[#6c7a90] mb-4 sm:mb-6">
+    <h3 class="text-[clamp(18px,2.1vw,22px)] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">TEST RESULTS</h3>
+    <p class="text-[clamp(14px,1.45vw,14px)] text-[#6c7a90] mb-4 sm:mb-6">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
     <button class="mx-auto block bg-blueMain text-white rounded-[10px] px-[20px] sm:px-[22px] py-[12px] text-[13px] font-bold transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">CHECK TEST</button>
   </article>
 </section>
 
-<!-- ===== DOCTORS ===== -->
-<section class="pt-10 sm:pt-[72px] px-4 sm:px-[6%]" id="doctors">
-  <h2 class="text-[32px] sm:text-[42px] md:text-[48px] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-.2px] sm:tracking-[-.25px] md:tracking-[-.3px] mb-6 sm:mb-8 md:mb-9 pl-0 md:pl-10">Doctors</h2>
+<!-- ===== DOCTORS (залишено як у тебе) ===== -->
+<section class="site pt-10 sm:pt-[72px] px-4 sm:px-[6%]" id="doctors">
+  <h2 class="text-[clamp(28px,5vw,48px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-.2px] sm:tracking-[-.25px] md:tracking-[-.3px] mb-6 sm:mb-8 md:mb-9 pl-0 md:pl-10">Doctors</h2>
 
   <div class="relative">
     <!-- left scroll btn (desktop) -->
@@ -227,7 +277,7 @@
     <div id="doctorsScroll"
          class="overflow-x-auto overflow-y-hidden py-[12px] sm:py-[14px] mb-1.5 overscroll-contain cursor-grab select-none [scrollbar-width:none] [-ms-overflow-style:none] no-scrollbar">
       <div class="flex flex-nowrap gap-6 sm:gap-8 md:gap-10 px-1 pb-1.5 scroll-smooth">
-        <!-- cards unchanged -->
+        <!-- cards -->
         <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
@@ -291,7 +341,7 @@
   </div>
 </section>
 
-<!-- ===== FOOTER ===== -->
+<!-- ===== FOOTER (ідентичний about) ===== -->
 <footer class="mt-[48px] sm:mt-[70px] md:mt-[88px] bg-[#F7FAFF]">
   <div class="px-4 sm:px-[6%] py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.25fr_1fr_1fr_1fr] gap-10 sm:gap-14 md:gap-20 items-start">
     <div>
@@ -337,8 +387,74 @@
   </div>
 </footer>
 
+<!-- ===== JS ===== -->
 <script>
-/* ===== Doctors scroller ===== */
+/* Desktop DOCTORS dropdown — як на about */
+(function(){
+  const toggle = document.getElementById('doctors-toggle-desktop');
+  const dd = document.getElementById('doctorsDropdownDesktop');
+  if (toggle && dd) {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      dd.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !dd.contains(e.target)) {
+        dd.classList.add('hidden');
+      }
+    });
+  }
+})();
+
+/* Fullscreen Mobile Overlay — ідентична логіка about */
+(function(){
+  const burger = document.getElementById('mobile-menu-button');
+  const overlay = document.getElementById('mobile-overlay');
+  const panel = document.getElementById('overlay-panel');
+  const backdrop = document.getElementById('overlay-backdrop');
+  const closeBtn = document.getElementById('overlay-close');
+
+  const open = () => {
+    overlay.classList.remove('hidden');
+    panel.classList.remove('panel-leave','panel-leave-active');
+    panel.classList.add('panel-enter');
+    requestAnimationFrame(() => {
+      document.body.classList.add('overflow-fixed');
+      backdrop.classList.remove('opacity-0');
+      panel.classList.add('panel-enter-active');
+      panel.classList.remove('opacity-0');
+    });
+  };
+
+  const close = () => {
+    panel.classList.remove('panel-enter','panel-enter-active');
+    panel.classList.add('panel-leave','panel-leave-active');
+    backdrop.classList.add('opacity-0');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      document.body.classList.remove('overflow-fixed');
+      panel.classList.remove('panel-leave','panel-leave-active');
+      panel.classList.add('panel-enter','opacity-0');
+    }, 200);
+  };
+
+  if (burger && overlay) {
+    burger.addEventListener('click', open);
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    backdrop.addEventListener('click', close);
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    overlay.querySelectorAll('.js-noop').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      });
+    });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+  }
+})();
+
+/* Doctors scroller — як у твоїй головній */
 (function(){
   const scroller = document.getElementById('doctorsScroll');
   if(!scroller) return;
@@ -360,40 +476,6 @@
     const dir=Number(b.dataset.dir||1);
     scroller.scrollBy({left:dir*step(),behavior:'smooth'});
   }));
-})();
-
-/* ===== Mobile menu toggle ===== */
-(function(){
-  const burger = document.getElementById('mobile-menu-button');
-  const menu = document.getElementById('mobile-menu');
-  if (burger && menu) {
-    burger.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-    // закриття по кліку поза меню
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !burger.contains(e.target)) {
-        menu.classList.add('hidden');
-      }
-    });
-  }
-})();
-
-/* ===== Desktop DOCTORS dropdown on click ===== */
-(function(){
-  const toggle = document.getElementById('doctors-toggle-desktop');
-  const dd = document.getElementById('doctorsDropdownDesktop');
-  if (toggle && dd) {
-    toggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      dd.classList.toggle('hidden');
-    });
-    document.addEventListener('click', (e) => {
-      if (!toggle.contains(e.target) && !dd.contains(e.target)) {
-        dd.classList.add('hidden');
-      }
-    });
-  }
 })();
 </script>
 
