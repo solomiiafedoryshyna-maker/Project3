@@ -48,13 +48,13 @@
   .dragging { cursor: grabbing !important; }
   #doctorsScroll::-webkit-scrollbar { display: none; }
   .mobile-nav::-webkit-scrollbar { display: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-  /* прибираємо синій фокус саме на стрілках */
   .no-focus { -webkit-tap-highlight-color: transparent; }
   .no-focus:focus,
   .no-focus:focus-visible { outline: none !important; box-shadow: none !important; }
 
-  /* вимикаємо hover-анімації на сенсорних екранах */
   @media (hover:none){
     .hover\:scale-\[1\.03\]:hover,
     .hover\:scale-\[1\.02\]:hover { transform: none !important; }
@@ -67,68 +67,91 @@
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<header class="bg-blueMain text-white px-4 sm:px-[6%] py-3 sm:py-4 rounded-[12px] m-2 sm:m-3
-               md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
-  <!-- ЛОГО -->
-  <div class="flex items-center gap-3">
-    <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 64 64" aria-hidden="true">
-      <circle cx="22" cy="18" r="6" fill="#fff"/>
-      <circle cx="12" cy="28" r="6" fill="#fff"/>
-      <circle cx="32" cy="28" r="6" fill="#fff"/>
-      <circle cx="22" cy="38" r="6" fill="#fff"/>
-    </svg>
-    <div class="text-white font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
-      <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
-    </div>
-  </div>
+<!-- ===== STICKY HEADER WRAP ===== -->
+<div class="sticky top-0 z-50">
+  <header class="bg-blueMain text-white px-4 sm:px-[6%] py-3 sm:py-4 rounded-b-[12px] md:rounded-[12px] md:m-3">
 
-  <!-- НАВІГАЦІЯ DESKTOP (по центру, без відступів зверху) -->
-  <nav class="hidden md:flex justify-center gap-9 items-center">
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
-
-    <div class="relative inline-flex items-center">
-      <label for="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none">DOCTORS</label>
-      <input id="doctors-toggle-desktop" type="checkbox" class="peer hidden">
-      <div class="hidden peer-checked:block absolute top-[34px] left-1/2 -translate-x-1/2 w-[240px] z-[100] animate-fade">
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
-        <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
-      </div>
-    </div>
-
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
-  </nav>
-
-  <!-- КНОПКИ AUTH (праворуч) -->
-  <div class="flex gap-2 justify-end">
-    <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
-    <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03] hover:text-white">SIGN UP</button>
-  </div>
-
-  <!-- ТА САМА НАВІГАЦІЯ ДЛЯ МОБІЛЬНИХ (нижче, скролиться по осі X) -->
-  <nav class="mobile-nav md:hidden col-span-full mt-3 -mb-2 overflow-x-auto whitespace-nowrap flex items-center gap-6 pb-2">
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
-    <div class="relative inline-block">
-      <label for="doctors-toggle-mobile" class="text-white font-semibold text-[13px] cursor-pointer select-none">DOCTORS</label>
-      <input id="doctors-toggle-mobile" type="checkbox" class="peer hidden">
-      <div class="hidden peer-checked:block absolute left-0 top-[28px] w-[240px] z-[100]">
-        <div class="absolute left-1/2 -translate-x-1/2 w-[240px]">
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Phillis K Vance MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Stanley K Hudson MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Kevin D Malone MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain">Angela S Martin MD</button>
+    <!-- top row: logo + desktop nav + right buttons + burger -->
+    <div class="md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-6">
+      <!-- Logo -->
+      <div class="flex items-center gap-3">
+        <svg class="w-7 h-7 sm:w-8 sm:h-8" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="22" cy="18" r="6" fill="#fff"/>
+          <circle cx="12" cy="28" r="6" fill="#fff"/>
+          <circle cx="32" cy="28" r="6" fill="#fff"/>
+          <circle cx="22" cy="38" r="6" fill="#fff"/>
+        </svg>
+        <div class="text-white font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
+          <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
         </div>
       </div>
-    </div>
-    <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
-  </nav>
-</header>
 
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex justify-center gap-9 items-center">
+        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">HOME</a>
+        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
+        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
+
+        <!-- DOCTORS desktop dropdown -->
+        <div class="relative inline-flex items-center">
+          <a href="#" id="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none hover:opacity-90">DOCTORS</a>
+          <div id="doctorsDropdownDesktop" class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[240px] z-[100]">
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+          </div>
+        </div>
+
+        <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
+      </nav>
+
+      <!-- Right CTA (desktop) + burger (mobile) -->
+      <div class="flex gap-2 justify-end items-center">
+        <!-- desktop buttons -->
+        <div class="hidden md:flex gap-2">
+          <button class="px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
+          <button class="px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03] hover:text-white">SIGN UP</button>
+        </div>
+        <!-- burger button -->
+        <button id="mobile-menu-button" class="md:hidden text-white no-focus" aria-label="Open menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m0 6H8"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu, білий блок під шапкою -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white text-ink rounded-[12px] mt-3 shadow-navbtn overflow-hidden">
+      <ul class="flex flex-col py-2">
+        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">HOME</a></li>
+        <li><a href="about.html" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">ABOUT</a></li>
+        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">SERVICES</a></li>
+        <li>
+          <details class="group">
+            <summary class="px-4 py-3 text-[14px] font-semibold cursor-pointer list-none hover:bg-blue-50 select-none">
+              DOCTORS
+            </summary>
+            <div class="px-4 pb-3 pt-1">
+              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Phillis K Vance MD</a>
+              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Stanley K Hudson MD</a>
+              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Kevin D Malone MD</a>
+              <a href="#" class="block px-3 py-2 text-[13px] rounded-[10px] bg-blueMain text-white font-semibold my-1 hover:bg-blueHover">Angela S Martin MD</a>
+            </div>
+          </details>
+        </li>
+        <li><a href="#" class="block px-4 py-3 text-[14px] font-semibold hover:bg-blue-50">CONTACT</a></li>
+      </ul>
+      <div class="flex flex-col gap-3 p-4 border-t border-gray-100">
+        <button class="w-full bg-blueMain text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
+        <button class="w-full bg-gray-100 text-[#2B3140] px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide">LOG IN</button>
+      </div>
+    </div>
+
+    
+  </header>
+</div>
 
 <!-- ===== HERO ===== -->
 <section class="px-4 sm:px-[6%] py-10 sm:py-[72px] flex flex-col md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
@@ -150,7 +173,7 @@
   </div>
 </section>
 
-<!-- ===== INFO CARDS ===== -->
+<!-- ===== 3 CARDS ===== -->
 <section class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 md:gap-12 px-4 sm:px-[6%] py-10 sm:py-14">
   <h2 class="sr-only">Key information cards</h2>
 
@@ -186,7 +209,7 @@
   <h2 class="text-[32px] sm:text-[42px] md:text-[48px] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-.2px] sm:tracking-[-.25px] md:tracking-[-.3px] mb-6 sm:mb-8 md:mb-9 pl-0 md:pl-10">Doctors</h2>
 
   <div class="relative">
-    <!-- стрілки тільки на md+ -->
+    <!-- left scroll btn (desktop) -->
     <button
       class="no-focus hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-[-6px]
              w-10 h-10 rounded-full bg-white text-blueMain shadow-navbtn z-10 scroll-btn
@@ -202,7 +225,7 @@
     </button>
 
     <div id="doctorsScroll"
-         class="overflow-x-auto overflow-y-hidden py-[12px] sm:py-[14px] mb-1.5 overscroll-contain cursor-grab select-none [scrollbar-width:none] [-ms-overflow-style:none]">
+         class="overflow-x-auto overflow-y-hidden py-[12px] sm:py-[14px] mb-1.5 overscroll-contain cursor-grab select-none [scrollbar-width:none] [-ms-overflow-style:none] no-scrollbar">
       <div class="flex flex-nowrap gap-6 sm:gap-8 md:gap-10 px-1 pb-1.5 scroll-smooth">
         <!-- cards unchanged -->
         <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
@@ -251,6 +274,7 @@
       </div>
     </div>
 
+    <!-- right scroll btn (desktop) -->
     <button
       class="no-focus hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-[-6px]
              w-10 h-10 rounded-full bg-white text-blueMain shadow-navbtn z-10 scroll-btn
@@ -314,7 +338,7 @@
 </footer>
 
 <script>
-/* горизонтальний скрол карток лікарів + drag */
+/* ===== Doctors scroller ===== */
 (function(){
   const scroller = document.getElementById('doctorsScroll');
   if(!scroller) return;
@@ -337,8 +361,41 @@
     scroller.scrollBy({left:dir*step(),behavior:'smooth'});
   }));
 })();
+
+/* ===== Mobile menu toggle ===== */
+(function(){
+  const burger = document.getElementById('mobile-menu-button');
+  const menu = document.getElementById('mobile-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+    // закриття по кліку поза меню
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !burger.contains(e.target)) {
+        menu.classList.add('hidden');
+      }
+    });
+  }
+})();
+
+/* ===== Desktop DOCTORS dropdown on click ===== */
+(function(){
+  const toggle = document.getElementById('doctors-toggle-desktop');
+  const dd = document.getElementById('doctorsDropdownDesktop');
+  if (toggle && dd) {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      dd.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !dd.contains(e.target)) {
+        dd.classList.add('hidden');
+      }
+    });
+  }
+})();
 </script>
 
 </body>
 </html>
-
