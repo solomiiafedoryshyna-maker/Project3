@@ -161,12 +161,13 @@
   </header>
 </div>
 
-<!-- ===== FULLSCREEN MOBILE OVERLAY MENU ===== -->
+<!-- ===== FULLSCREEN MOBILE OVERLAY MENU (full blue page) ===== -->
 <div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
   <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
 
+  <!-- зроблено fixed + min-h-[100dvh] для повної висоти екрана -->
   <nav id="overlay-panel"
-       class="absolute inset-0 bg-blueMain text-white flex flex-col opacity-0 panel-enter">
+       class="fixed inset-0 min-h-[100dvh] bg-blueMain text-white flex flex-col opacity-0 panel-enter">
     <!-- топ-бар -->
     <div class="site flex items-center justify-between px-4 sm:px-[6%] py-3 border-b border-white/10">
       <div class="flex items-center gap-3">
@@ -185,10 +186,10 @@
       </button>
     </div>
 
-    <!-- контент -->
+    
     <div class="flex-1 overflow-y-auto">
-      <div class="site px-4 sm:px-[6%] py-6">
-        <div class="mx-auto">
+      <div class="site px-4 sm:px-[6%] py-6 h-full">
+        <div class="mx-auto h-full flex flex-col justify-between">
           <ul class="flex flex-col gap-4 sm:gap-5">
             <li><a href="index.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">HOME</a></li>
             <li><a href="about.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">ABOUT</a></li>
@@ -209,7 +210,8 @@
             <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
           </ul>
 
-          <div class="mt-6 grid grid-cols-2 gap-2">
+          
+          <div class="mt-6 grid grid-cols-2 gap-2 pb-2">
             <button class="w-full bg-white text-blueMain px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
             <button class="w-full bg-white/15 text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 border border-white hover:bg-white/20 no-focus">LOG IN</button>
           </div>
