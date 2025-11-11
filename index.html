@@ -38,38 +38,28 @@
 </script>
 
 <style>
-  /* базові утиліти — як на about */
   .site{min-width:300px;width:100%;margin:0 auto}
-
   .no-focus{-webkit-tap-highlight-color:transparent}
   .no-focus:focus,.no-focus:focus-visible{outline:none!important;box-shadow:none!important}
-
   .mobile-nav::-webkit-scrollbar{display:none}
   .no-scrollbar::-webkit-scrollbar{display:none}
   .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
-
   @media (hover:none){
     .hover\:-translate-y-\[1px\]:hover{transform:none!important}
     .hover\:shadow-btn:hover{box-shadow:none!important}
     .hover\:scale-\[1\.03\]:hover{transform:none!important}
   }
-
   .dragging{cursor:grabbing!important}
   .wrap-anywhere{overflow-wrap:anywhere}
-
   .panel-enter{opacity:0; transform:translateY(6px)}
   .panel-enter-active{opacity:1; transform:translateY(0); transition:opacity .2s ease, transform .2s ease}
   .panel-leave{opacity:1; transform:translateY(0)}
   .panel-leave-active{opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease}
-
-  /* Дуже вузькі екрани */
   @media (max-width:360px){
     .px-4{padding-left:12px!important; padding-right:12px!important}
     .py-3{padding-top:10px!important; padding-bottom:10px!important}
     .brand-tight{font-size:16px!important}
   }
-
-  /* Компактний хедер 780–945 px — як на about */
   @media (min-width:780px) and (max-width:945px){
     header.site{padding-left:4vw; padding-right:4vw}
     .brand-tight{font-size:18px; letter-spacing:.1px}
@@ -83,7 +73,7 @@
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<!-- ===== STICKY HEADER (ідентичний about, прямі кути) ===== -->
+<!-- ===== STICKY HEADER ===== -->
 <div class="sticky top-0 z-50">
   <header
     class="site bg-blueMain text-white rounded-none md:rounded-none
@@ -145,12 +135,13 @@
   </header>
 </div>
 
-<!-- ===== FULLSCREEN MOBILE OVERLAY MENU (як на about) ===== -->
+<!-- ===== FULLSCREEN MOBILE OVERLAY MENU (full blue page) ===== -->
 <div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
   <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
 
+  <!-- зроблено fixed + min-h-[100dvh] для повної висоти екрана -->
   <nav id="overlay-panel"
-       class="absolute inset-0 bg-blueMain text-white flex flex-col opacity-0 panel-enter">
+       class="fixed inset-0 min-h-[100dvh] bg-blueMain text-white flex flex-col opacity-0 panel-enter">
     <!-- топ-бар -->
     <div class="site flex items-center justify-between px-4 sm:px-[6%] py-3 border-b border-white/10">
       <div class="flex items-center gap-3">
@@ -169,10 +160,10 @@
       </button>
     </div>
 
-    <!-- контент -->
+    <!-- контент: займає весь екран, список + кнопки розтягнуті -->
     <div class="flex-1 overflow-y-auto">
-      <div class="site px-4 sm:px-[6%] py-6">
-        <div class="mx-auto">
+      <div class="site px-4 sm:px-[6%] py-6 h-full">
+        <div class="mx-auto h-full flex flex-col justify-between">
           <ul class="flex flex-col gap-4 sm:gap-5">
             <li><a href="index.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">HOME</a></li>
             <li><a href="about.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">ABOUT</a></li>
@@ -193,7 +184,8 @@
             <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
           </ul>
 
-          <div class="mt-6 grid grid-cols-2 gap-2">
+          <!-- кнопки внизу екрана, але з відступами -->
+          <div class="mt-6 grid grid-cols-2 gap-2 pb-2">
             <button class="w-full bg-white text-blueMain px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
             <button class="w-full bg-white/15 text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 border border-white hover:bg-white/20 no-focus">LOG IN</button>
           </div>
@@ -203,7 +195,7 @@
   </nav>
 </div>
 
-<!-- ===== HERO (контент залишено як був, адаптивність через clamp/брейкпоінти) ===== -->
+<!-- ===== HERO ===== -->
 <section class="site px-4 sm:px-[6%] py-10 sm:py-[72px] flex flex-col md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
   <div class="md:max-w-[52%] pl-0 md:pl-10">
     <h1 class="text-[clamp(28px,6vw,56px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-0.2px] sm:tracking-[-0.3px] md:tracking-[-0.4px] text-[#232838] mb-[18px] sm:mb-[22px] md:mb-[26px]">
@@ -223,7 +215,7 @@
   </div>
 </section>
 
-<!-- ===== 3 CARDS (без змін у дизайні, адаптивність збережена) ===== -->
+<!-- ===== 3 CARDS ===== -->
 <section class="site grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 md:gap-12 px-4 sm:px-[6%] py-10 sm:py-14">
   <h2 class="sr-only">Key information cards</h2>
 
@@ -254,12 +246,11 @@
   </article>
 </section>
 
-<!-- ===== DOCTORS (залишено як у тебе) ===== -->
+<!-- ===== DOCTORS ===== -->
 <section class="site pt-10 sm:pt-[72px] px-4 sm:px-[6%]" id="doctors">
   <h2 class="text-[clamp(28px,5vw,48px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-.2px] sm:tracking-[-.25px] md:tracking-[-.3px] mb-6 sm:mb-8 md:mb-9 pl-0 md:pl-10">Doctors</h2>
 
   <div class="relative">
-    <!-- left scroll btn (desktop) -->
     <button
       class="no-focus hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 left-[-6px]
              w-10 h-10 rounded-full bg-white text-blueMain shadow-navbtn z-10 scroll-btn
@@ -277,7 +268,6 @@
     <div id="doctorsScroll"
          class="overflow-x-auto overflow-y-hidden py-[12px] sm:py-[14px] mb-1.5 overscroll-contain cursor-grab select-none [scrollbar-width:none] [-ms-overflow-style:none] no-scrollbar">
       <div class="flex flex-nowrap gap-6 sm:gap-8 md:gap-10 px-1 pb-1.5 scroll-smooth">
-        <!-- cards -->
         <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
@@ -324,7 +314,6 @@
       </div>
     </div>
 
-    <!-- right scroll btn (desktop) -->
     <button
       class="no-focus hidden md:flex items-center justify-center absolute top-1/2 -translate-y-1/2 right-[-6px]
              w-10 h-10 rounded-full bg-white text-blueMain shadow-navbtn z-10 scroll-btn
@@ -341,7 +330,7 @@
   </div>
 </section>
 
-<!-- ===== FOOTER (ідентичний about) ===== -->
+<!-- ===== FOOTER ===== -->
 <footer class="mt-[48px] sm:mt-[70px] md:mt-[88px] bg-[#F7FAFF]">
   <div class="px-4 sm:px-[6%] py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.25fr_1fr_1fr_1fr] gap-10 sm:gap-14 md:gap-20 items-start">
     <div>
@@ -389,7 +378,7 @@
 
 <!-- ===== JS ===== -->
 <script>
-/* Desktop DOCTORS dropdown — як на about */
+/* Desktop DOCTORS dropdown */
 (function(){
   const toggle = document.getElementById('doctors-toggle-desktop');
   const dd = document.getElementById('doctorsDropdownDesktop');
@@ -406,7 +395,7 @@
   }
 })();
 
-/* Fullscreen Mobile Overlay — ідентична логіка about */
+/* Fullscreen Mobile Overlay */
 (function(){
   const burger = document.getElementById('mobile-menu-button');
   const overlay = document.getElementById('mobile-overlay');
@@ -454,7 +443,7 @@
   }
 })();
 
-/* Doctors scroller — як у твоїй головній */
+/* Doctors scroller */
 (function(){
   const scroller = document.getElementById('doctorsScroll');
   if(!scroller) return;
