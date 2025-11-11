@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -12,7 +12,7 @@
 <script>
   tailwind.config = {
     theme: {
-      screens: { sm:'520px', md:'780px', mdx:'900px', lgx:'1200px' },
+      screens: { sm:'520px', md:'780px', mdx:'900px', lgx:'1200px', xlx:'1747px' },
       extend: {
         fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui'] },
         colors: {
@@ -38,8 +38,9 @@
 </script>
 
 <style>
-  /* Головний контейнер */
-  .site{min-width:300px;width:100%;margin:0 auto}
+  /* Головний fluid-контейнер до 1747px */
+  .site{min-width:300px;width:100%;max-width:1747px;margin:0 auto}
+  html,body{overflow-x:hidden}
 
   .no-focus{-webkit-tap-highlight-color:transparent}
   .no-focus:focus,.no-focus:focus-visible{outline:none!important;box-shadow:none!important}
@@ -78,6 +79,27 @@
   .panel-leave{opacity:1; transform:translateY(0)}
   .panel-leave-active{opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease}
 
+  /* ===== АДАПТИВ ДЛЯ ХЕДЕРА (ВСЕ ПЛАВНО 300–1747px) ===== */
+  /* 1) Розмір логотипу/вордмарку плавний */
+  .brand-tight{font-size:clamp(17px,1.8vw,20px); letter-spacing:.05px}
+  /* 2) Навігація — шрифт і проміжки плавні, без переносу */
+  .header-nav{gap:clamp(12px,2.2vw,36px); flex-wrap:nowrap}
+  .header-nav a.nav-link{
+    font-size:clamp(11px,1.15vw,13px);
+    letter-spacing:.02em;
+    white-space:nowrap;               /* не переносити пункти */
+  }
+  /* 3) Кнопки справа — теж плавно стискаються */
+  .btn-compact{
+    height:clamp(34px,3.6vw,40px);
+    padding:clamp(6px,.6vw,8px) clamp(10px,1.1vw,16px);
+    font-size:clamp(11px,1.05vw,13px);
+  }
+  /* 4) Падінги хедера трохи стискаються на вузьких desktop */
+  @media (min-width:780px){
+    header.site{padding-left:clamp(16px,3.2vw,64px); padding-right:clamp(16px,3.2vw,64px)}
+  }
+
   /* Дуже вузькі екрани */
   @media (max-width:360px){
     .px-4{padding-left:12px!important; padding-right:12px!important}
@@ -85,90 +107,86 @@
     .brand-tight{font-size:16px!important}
   }
 
-  /* === КОМПАКТ ДЛЯ 780–945 px (тільки хедер) === */
-@media (min-width:780px) and (max-width:945px){
-  header.site{padding-left:4vw; padding-right:4vw}
-  .brand-tight{font-size:18px; letter-spacing:.1px}
-  .brand-tight span{white-space:nowrap}
-  nav.header-nav{gap:24px}
-  nav.header-nav a{font-size:12px}
-  .right-cta{gap:6px}
-  .btn-compact{height:36px; padding:6px 12px; font-size:12px}
-}
+  /* Після 1747px: контент не ширшає — лише «дихають» відступи */
+  @media (min-width:1747px){
+    header.site, section.site, footer .site{
+      padding-left:clamp(16px,4vw,80px);
+      padding-right:clamp(16px,4vw,80px);
+    }
+  }
 </style>
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<!-- ===== STICKY HEADER ===== -->
-<div class="sticky top-0 z-50">
-  <header
-  class="site bg-blueMain text-white rounded-none md:rounded-none
-         w-full box-border
-         px-[4vw] sm:px-[5vw] md:px-[6vw]
-         py-3 sm:py-4
-         flex items-center justify-between
-         md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0 overflow-x-visible">
+<!-- ===== FULL-WIDTH STICKY HEADER ===== -->
+<div class="sticky top-0 z-50 bg-blueMain">
+  <div class="site">
+    <header
+      class="text-white w-full box-border
+             px-[4vw] sm:px-[5vw] md:px-[6vw]
+             py-3 sm:py-4
+             flex items-center justify-between
+             md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0 overflow-x-visible">
 
-    <!-- Лого -->
-    <div class="flex items-center gap-3 min-w-0">
-      <svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
-        <circle cx="22" cy="18" r="6" fill="#fff"/>
-        <circle cx="12" cy="28" r="6" fill="#fff"/>
-        <circle cx="32" cy="28" r="6" fill="#fff"/>
-        <circle cx="22" cy="38" r="6" fill="#fff"/>
-      </svg>
-      <div class="brand-tight font-extrabold tracking-[.2px] text-[18px] sm:text-[20px]">
-        <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
-      </div>
-    </div>
-
-    <!-- Навігація (desktop) -->
-    <nav class="header-nav hidden md:flex justify-center items-center gap-9">
-      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="index.html">HOME</a>
-      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="about.html">ABOUT</a>
-      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">SERVICES</a>
-
-      <div class="relative inline-flex items-center">
-        <a href="#" id="doctors-toggle-desktop" class="text-white font-semibold text-[13px] cursor-pointer select-none hover:opacity-90">DOCTORS</a>
-        <div id="doctorsDropdownDesktop"
-             class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(240px,92vw)] z-[100] animate-fade">
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
-          <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+      <!-- Лого -->
+      <div class="flex items-center gap-3 min-w-0">
+        <svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="22" cy="18" r="6" fill="#fff"/>
+          <circle cx="12" cy="28" r="6" fill="#fff"/>
+          <circle cx="32" cy="28" r="6" fill="#fff"/>
+          <circle cx="22" cy="38" r="6" fill="#fff"/>
+        </svg>
+        <div class="brand-tight font-extrabold tracking-[.2px]">
+          <span class="mr-[2px]">Health</span><span class="opacity-90 font-semibold">Specialist</span>
         </div>
       </div>
 
-      <a class="text-white font-semibold text-[13px] no-underline hover:opacity-90" href="#">CONTACT</a>
-    </nav>
+      <!-- Навігація (desktop) -->
+      <nav class="header-nav hidden md:flex justify-center items-center">
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="index.html">HOME</a>
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="about.html">ABOUT</a>
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">SERVICES</a>
 
-    <!-- Правий блок: кнопки + бургер -->
-    <div class="right-cta flex gap-2 justify-end items-center">
-      <div class="hidden md:flex gap-2">
-        <button class="btn-compact px-3 sm:px-4 py-2 rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold text-[13px] transition-all duration-150 hover:bg:white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
-        <button class="btn-compact px-3 sm:px-4 py-2 rounded-[10px] bg-white text-blueMain font-bold text-[13px] transition-all duration-150 hover:bg-blueHover hover:text-white hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
+        <div class="relative inline-flex items-center">
+          <a href="#" id="doctors-toggle-desktop" class="nav-link text-white font-semibold cursor-pointer select-none hover:opacity-90">DOCTORS</a>
+          <div id="doctorsDropdownDesktop"
+               class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(240px,92vw)] z-[100] animate-fade">
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
+            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+          </div>
+        </div>
+
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">CONTACT</a>
+      </nav>
+
+      <!-- Правий блок: кнопки + бургер -->
+      <div class="right-cta flex gap-2 justify-end items-center">
+        <div class="hidden md:flex gap-2">
+          <button class="btn-compact rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
+          <button class="btn-compact rounded-[10px] bg-white text-blueMain font-bold transition-all duration-150 hover:bg-blueHover hover:text-white hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
+        </div>
+
+        <!-- Бургер -->
+        <button id="mobile-menu-button"
+                class="md:hidden text-white no-focus flex items-center justify-center w-10 h-10 rounded-[10px] active:scale-[.98]"
+                aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m0 6H8"></path>
+          </svg>
+        </button>
       </div>
-
-      <!-- Бургер -->
-      <button id="mobile-menu-button"
-              class="md:hidden text-white no-focus flex items-center justify-center w-10 h-10 rounded-[10px] active:scale-[.98]"
-              aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m0 6H8"></path>
-        </svg>
-      </button>
-    </div>
-  </header>
+    </header>
+  </div>
 </div>
 
-<!-- ===== FULLSCREEN MOBILE OVERLAY MENU (full blue page) ===== -->
+<!-- ===== FULLSCREEN MOBILE OVERLAY ===== -->
 <div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
   <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
 
-  <!-- зроблено fixed + min-h-[100dvh] для повної висоти екрана -->
   <nav id="overlay-panel"
        class="fixed inset-0 min-h-[100dvh] bg-blueMain text-white flex flex-col opacity-0 panel-enter">
-    <!-- топ-бар -->
     <div class="site flex items-center justify-between px-4 sm:px-[6%] py-3 border-b border-white/10">
       <div class="flex items-center gap-3">
         <svg class="w-7 h-7" viewBox="0 0 64 64" aria-hidden="true">
@@ -186,7 +204,6 @@
       </button>
     </div>
 
-    
     <div class="flex-1 overflow-y-auto">
       <div class="site px-4 sm:px-[6%] py-6 h-full">
         <div class="mx-auto h-full flex flex-col justify-between">
@@ -210,7 +227,6 @@
             <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
           </ul>
 
-          
           <div class="mt-6 grid grid-cols-2 gap-2 pb-2">
             <button class="w-full bg-white text-blueMain px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
             <button class="w-full bg-white/15 text-white px-6 py-2.5 rounded-[10px] text-[12px] font-extrabold tracking-wide transition-all duration-150 border border-white hover:bg-white/20 no-focus">LOG IN</button>
@@ -224,12 +240,10 @@
 <!-- ===== CONTENT ===== -->
 <section class="site py-12 sm:py-16 md:py-20 px-4 sm:px-[6%] bg-white">
   <div class="w-full">
-    <h1 class="text-[clamp(30px,5.2vw,56px)] font-extrabold mb-2 sm:mb-3">About HealthSpecialist</h1>
-    <!-- ЗМЕНШЕНО: було clamp(14px,1.35vw,18px) -->
-    <p class="max-w-[1100px] text-[clamp(13px,1.2vw,16px)] leading-[1.85] tracking-[0.01em] text-[#4B5563]">
-  Our mission is to combine modern medicine, human care, and convenient access to healthcare — so you always feel healthy and confident. We provide timely, evidence-based care with a personalized approach. From family medicine to cardiology, our team focuses on prevention, early diagnosis, and a smooth, comfortable recovery for every patient. We believe that true health comes from trust, compassion, and continuous support at every stage of your life.
+    <h1 class="hero-title text-[clamp(30px,5.2vw,56px)] font-extrabold mb-2 sm:mb-3">About HealthSpecialist</h1>
+    <p class="hero-text max-w-[1100px] text-[clamp(13px,1.2vw,16px)] leading-[1.85] tracking-[0.01em] text-[#4B5563]">
+      Our mission is to combine modern medicine, human care, and convenient access to healthcare — so you always feel healthy and confident. We provide timely, evidence-based care with a personalized approach. From family medicine to cardiology, our team focuses on prevention, early diagnosis, and a smooth, comfortable recovery for every patient. We believe that true health comes from trust, compassion, and continuous support at every stage of your life.
     </p>
-
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 items-stretch">
       <article class="w-full bg-card rounded-[14px] shadow-card shadow-soft p-6 sm:p-8 md:p-10 text-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
@@ -264,7 +278,6 @@
                       before:content-[''] before:absolute before:inset-y-0 before:left-0 before:w-2
                       before:bg-[linear-gradient(180deg,_#3B82F6,_#60A5FA)] before:rounded-l-[16px]">
         <h3 class="text-[clamp(16px,1.6vw,20px)] font-extrabold mb-2">Compassion</h3>
-        <!-- ЗМЕНШЕНО: було clamp(14px,1.45vw,18px) -->
         <p class="text-[#4B5563] text-[clamp(13px,1.25vw,16px)] leading-[1.7]">We listen first and treat every patient with dignity and respect.</p>
       </article>
 
@@ -292,48 +305,54 @@
   </div>
 </section>
 
-<section class="site bg-[#F7FAFF] py-12 sm:py-16 md:py-20 px-4 sm:px-[6%]">
-  <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-[40px] sm:gap-[60px] md:gap-[80px] items-center">
-    <div>
-      <h2 class="text-[clamp(24px,2.8vw,38px)] font-extrabold mb-6 sm:mb-10 text-center">Our story</h2>
-      <ol class="flex flex-col gap-5 sm:gap-7">
-        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
-          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
-          <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
-            <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2016 — The Idea</h3>
-            <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">We started as a small practice focused on rapid primary care and prevention.</p>
-          </div>
-        </li>
-        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
-          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
-          <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
-            <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2019 — Expansion</h3>
-            <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Opened diagnostic and rehabilitation units to support full recovery cycles.</p>
-          </div>
-        </li>
-        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
-          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
-          <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
-            <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2023 — Digital first</h3>
-            <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Launched online booking, patient portal, and same-day telemedicine.</p>
-          </div>
-        </li>
-        <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
-          <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
-          <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
-            <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">Today — Multispecialty</h3>
-            <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Cardiology, internal medicine, family medicine, and physical therapy under one roof.</p>
-          </div>
-        </li>
-      </ol>
-    </div>
+<!-- ===== OUR STORY (full-width blue like header/footer) ===== -->
+<div class="w-full bg-[#F7FAFF]">
+  <section class="site py-12 sm:py-16 md:py-20 px-4 sm:px-[6%]" id="our-story">
+    <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-[40px] sm:gap-[60px] md:gap-[80px] items-center">
+      <div>
+        <h2 class="text-[clamp(24px,2.8vw,38px)] font-extrabold mb-6 sm:mb-10 text-center">Our story</h2>
+        <ol class="flex flex-col gap-5 sm:gap-7">
+          <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+            <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+            <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+              <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2016 — The Idea</h3>
+              <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">We started as a small practice focused on rapid primary care and prevention.</p>
+            </div>
+          </li>
 
-    <div class="relative flex justify-center items-center">
-      <img src="images/Ambulans2.svg" alt="Our team at HealthSpecialist"
-        class="w-full h-auto object-contain relative md:top-[40px] md:left-[30px] transition-transform duration-300 hover:scale-[1.03]">
+          <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+            <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+            <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+              <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2019 — Expansion</h3>
+              <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Opened diagnostic and rehabilitation units to support full recovery cycles.</p>
+            </div>
+          </li>
+
+          <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+            <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+            <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+              <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">2023 — Digital first</h3>
+              <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Launched online booking, patient portal, and same-day telemedicine.</p>
+            </div>
+          </li>
+
+          <li class="grid grid-cols-[20px_1fr] sm:grid-cols-[22px_1fr] items-start gap-4 sm:gap-5">
+            <span class="justify-self-center mt-[20px] sm:mt-[26px] w-[10px] h-[10px] sm:w-[12px] sm:h-[12px] rounded-full bg-blueMain shadow-[0_0_0_3px_#EAF1FB]"></span>
+            <div class="w-full bg-white rounded-[14px] shadow-card px-5 sm:px-7 md:px-8 py-5 sm:py-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-blueGlow">
+              <h3 class="text-[clamp(15px,1.7vw,20px)] font-extrabold mb-1.5">Today — Multispecialty</h3>
+              <p class="text-[#4b5563] text-[clamp(14px,1.5vw,18px)] leading-[1.62]">Cardiology, internal medicine, family medicine, and physical therapy under one roof.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="relative flex justify-center items-center">
+        <img src="images/Ambulans2.svg" alt="Our team at HealthSpecialist"
+             class="w-full h-auto object-contain relative md:top-[40px] md:left-[30px] transition-transform duration-300 hover:scale-[1.03]">
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <section class="site py-12 sm:py-16 md:py-20 px-4 sm:px-[6%]">
   <div class="w-full">
@@ -366,7 +385,7 @@
 
 <!-- ===== FOOTER ===== -->
 <footer class="mt-[48px] sm:mt-[70px] md:mt-[88px] bg-[#F7FAFF]">
-  <div class="px-4 sm:px-[6%] py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.25fr_1fr_1fr_1fr] gap-10 sm:gap-14 md:gap-20 items-start">
+  <div class="site px-4 sm:px-[6%] py-10 sm:py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.25fr_1fr_1fr_1fr] gap-10 sm:gap-14 md:gap-20 items-start">
     <div>
       <div class="flex items-center gap-3">
         <svg class="w-[30px] h-[30px] sm:w-[34px] sm:h-[34px]" viewBox="0 0 64 64" aria-hidden="true">
