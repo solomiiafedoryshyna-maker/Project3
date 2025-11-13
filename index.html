@@ -38,18 +38,15 @@
 </script>
 
 <style>
-  /* === Fluid-контейнер до 1747px (дизайн без змін) === */
   .site{min-width:300px;width:100%;max-width:1747px;margin:0 auto}
   html,body{overflow-x:hidden}
 
-  /* Фокус/скрол */
   .no-focus{-webkit-tap-highlight-color:transparent}
   .no-focus:focus,.no-focus:focus-visible{outline:none!important;box-shadow:none!important}
   .mobile-nav::-webkit-scrollbar{display:none}
   .no-scrollbar::-webkit-scrollbar{display:none}
   .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
 
-  /* Ховери на тачах не активуються */
   @media (hover:none){
     .hover\:-translate-y-\[1px\]:hover{transform:none!important}
     .hover\:shadow-btn:hover{box-shadow:none!important}
@@ -59,66 +56,89 @@
   .dragging{cursor:grabbing!important}
   .wrap-anywhere{overflow-wrap:anywhere}
 
-  /* Анімація моб. панелі */
   .panel-enter{opacity:0; transform:translateY(6px)}
   .panel-enter-active{opacity:1; transform:translateY(0); transition:opacity .2s ease, transform .2s ease}
   .panel-leave{opacity:1; transform:translateY(0)}
   .panel-leave-active{opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease}
 
-  /* ====== ГОЛОВНЕ: адаптивна типографіка/проміжки для хедера ====== */
-  .brand-tight{
-    font-size:clamp(17px,1.8vw,20px);
-    letter-spacing:.05px;
-  }
+  .brand-tight{font-size:clamp(17px,1.8vw,20px); letter-spacing:.05px}
+  .header-nav{gap:clamp(12px,2.2vw,36px); flex-wrap:nowrap}
+  .header-nav a.nav-link{font-size:clamp(11px,1.15vw,13px); letter-spacing:.02em; white-space:nowrap}
+  .btn-compact{height:clamp(34px,3.6vw,40px); padding:clamp(6px,.6vw,8px) clamp(10px,1.1vw,16px); font-size:clamp(11px,1.05vw,13px)}
+  @media (min-width:780px){ header.site{padding-left:clamp(16px,3.2vw,64px); padding-right:clamp(16px,3.2vw,64px)} }
 
-  .header-nav{
-    gap:clamp(12px,2.2vw,36px);
-    flex-wrap:nowrap;
-  }
-
-  .header-nav a.nav-link{
-    font-size:clamp(11px,1.15vw,13px);
-    letter-spacing:.02em;
-    white-space:nowrap; /* не переносити пункти */
-  }
-
-  .btn-compact{
-    height:clamp(34px,3.6vw,40px);
-    padding:clamp(6px,.6vw,8px) clamp(10px,1.1vw,16px);
-    font-size:clamp(11px,1.05vw,13px);
-  }
-
-  @media (min-width:780px){
-    header.site{
-      padding-left:clamp(16px,3.2vw,64px);
-      padding-right:clamp(16px,3.2vw,64px);
-    }
-  }
-
-  /* Дуже вузькі */
   @media (max-width:360px){
     .px-4{padding-left:12px!important; padding-right:12px!important}
     .py-3{padding-top:10px!important; padding-bottom:10px!important}
     .brand-tight{font-size:16px!important}
   }
 
-  /* Зона 1200+ — легке збільшення прогалин у каруселі лікарів */
-  @media (min-width:1200px){
-    .doctors-gap{gap:40px}
-  }
+  @media (min-width:1200px){ .doctors-gap{gap:40px} }
 
-  /* Після 1747px контент не ширшає — «дихають» відступи */
   @media (min-width:1747px){
     header.site, section.site, footer .site{
       padding-left:clamp(16px,4vw,80px);
       padding-right:clamp(16px,4vw,80px);
     }
   }
+
+  .footer-doc{ text-decoration:none; cursor:pointer }
+  .footer-doc:hover{ text-decoration:underline; text-underline-offset:2px }
+
+  .footer-service{ text-decoration:none; cursor:pointer }
+  .footer-service:hover{ text-decoration:underline; text-underline-offset:2px }
+
+  .doctor-card{ position:relative; transition:transform .18s ease }
+  @keyframes cardBump {
+    0%   { transform: translateY(0) scale(1);    box-shadow: 0 8px 22px rgba(16,24,40,.06) }
+    30%  { transform: translateY(-1px) scale(1.02); box-shadow: 0 10px 24px rgba(59,130,246,.25) }
+    100% { transform: translateY(0) scale(1);    box-shadow: 0 8px 22px rgba(16,24,40,.06) }
+  }
+  @keyframes ringPulse {
+    0%   { opacity:0; transform:scale(.98) }
+    15%  { opacity:1; transform:scale(1) }
+    100% { opacity:0; transform:scale(1.02) }
+  }
+  .doctor-card.is-highlight{ animation: cardBump .9s ease-out 1 }
+  .doctor-card.is-highlight::after{
+    content:""; position:absolute; inset:-3px; border-radius:14px;
+    box-shadow: 0 0 0 3px rgba(59,130,246,.95), 0 24px 64px rgba(59,130,246,.22);
+    animation: ringPulse .9s ease-out 1; pointer-events:none;
+  }
+
+  @keyframes contactFlash {
+    0%   { transform: scale(1);   box-shadow: 0 10px 24px rgba(59,130,246,.25), 0 0 0 0 rgba(59,130,246,0); }
+    35%  { transform: scale(1.03); box-shadow: 0 14px 34px rgba(59,130,246,.35), 0 0 0 6px rgba(59,130,246,.30); }
+    100% { transform: scale(1);   box-shadow: 0 10px 24px rgba(59,130,246,.25), 0 0 0 0 rgba(59,130,246,0); }
+  }
+  #footer-contact-btn.flash{ animation: contactFlash .9s ease-out 1; }
+
+  @keyframes pillFlash {
+    0%   {
+      transform: scale(1);
+      box-shadow:
+        0 10px 24px rgba(59,130,246,0.25),
+        0 0 0 0 rgba(59,130,246,0);
+    }
+    35%  {
+      transform: scale(1.04);
+      box-shadow:
+        0 14px 34px rgba(59,130,246,0.35),
+        0 0 0 6px rgba(59,130,246,0.30);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow:
+        0 10px 24px rgba(59,130,246,0.25),
+        0 0 0 0 rgba(59,130,246,0);
+    }
+  }
+  .pill-flash{ animation: pillFlash .9s ease-out 1; }
 </style>
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<!-- ===== FULL-WIDTH STICKY HEADER ===== -->
+
 <div class="sticky top-0 z-50 bg-blueMain">
   <div class="site">
     <header
@@ -128,7 +148,7 @@
              flex items-center justify-between
              md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0 overflow-x-visible">
 
-      <!-- Лого -->
+      
       <div class="flex items-center gap-3 min-w-0">
         <svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
           <circle cx="22" cy="18" r="6" fill="#fff"/>
@@ -141,24 +161,29 @@
         </div>
       </div>
 
-      <!-- Навігація (desktop) -->
+      
       <nav class="header-nav hidden md:flex justify-center items-center">
         <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="index.html">HOME</a>
         <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="about.html">ABOUT</a>
-        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">SERVICES</a>
+        
+        <a id="nav-services-desktop" class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">SERVICES</a>
 
         <div class="relative inline-flex items-center">
           <a href="#" id="doctors-toggle-desktop" class="nav-link text-white font-semibold cursor-pointer select-none hover:opacity-90">DOCTORS</a>
           <div id="doctorsDropdownDesktop"
                class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(240px,92vw)] z-[100] animate-fade">
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+            
+            <button data-doc-target="doc-phillis" class="w-full bg-blueMain text-white font-extrabold text-[13px] leading-none px-4 py-3 my-1 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
+            <button data-doc-target="doc-stanley" class="w-full bg-blueMain text-white font-extrabold text-[13px] leading-none px-4 py-3 my-1 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
+            <button data-doc-target="doc-kevin" class="w-full bg-blueMain text-white font-extrabold text-[13px] leading-none px-4 py-3 my-1 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
+            <button data-doc-target="doc-angela" class="w-full bg-blueMain text-white font-extrabold text-[13px] leading-none px-4 py-3 my-1 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
           </div>
         </div>
 
-        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">CONTACT</a>
+        
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90"
+           href="tel:+14041234567" id="contact-link-desktop"
+           aria-label="Call +1 (404) 123-4567">CONTACT</a>
       </nav>
 
       
@@ -168,7 +193,7 @@
           <button class="btn-compact rounded-[10px] bg-white text-blueMain font-bold transition-all duration-150 hover:bg-blueHover hover:text-white hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
         </div>
 
-        <!-- Бургер -->
+        
         <button id="mobile-menu-button"
                 class="md:hidden text-white no-focus flex items-center justify-center w-10 h-10 rounded-[10px] active:scale-[.98]"
                 aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
@@ -181,7 +206,7 @@
   </div>
 </div>
 
-<!-- ===== FULLSCREEN MOBILE OVERLAY MENU ===== -->
+
 <div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
   <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
 
@@ -215,14 +240,15 @@
               <details class="group">
                 <summary class="menu-link px-2 py-2 text-[16px] font-semibold cursor-pointer list-none rounded-[10px] select-none">DOCTORS</summary>
                 <div class="px-2 pt-2">
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</a>
+                  <a href="#" data-doc-target="doc-phillis" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</a>
+                  <a href="#" data-doc-target="doc-stanley" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</a>
+                  <a href="#" data-doc-target="doc-kevin" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</a>
+                  <a href="#" data-doc-target="doc-angela" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</a>
                 </div>
               </details>
             </li>
-            <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
+            
+            <li><a href="tel:+14041234567" id="contact-link-mobile" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]" aria-label="Call +1 (404) 123-4567">CONTACT</a></li>
           </ul>
 
           <div class="mt-6 grid grid-cols-2 gap-2 pb-2">
@@ -235,7 +261,7 @@
   </nav>
 </div>
 
-<!-- ===== HERO ===== -->
+
 <section class="site px-4 sm:px-[6%] py-10 sm:py-[72px] flex flex-col md:flex-row items-center gap-8 sm:gap-12 md:gap-16">
   <div class="md:max-w-[52%] pl-0 md:pl-10">
     <h1 class="text-[clamp(28px,6vw,56px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-0.2px] sm:tracking-[-0.3px] md:tracking-[-0.4px] text-[#232838] mb-[18px] sm:mb-[22px] md:mb-[26px]">
@@ -255,14 +281,14 @@
   </div>
 </section>
 
-<!-- ===== 3 CARDS ===== -->
+
 <section class="site grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10 md:gap-12 px-4 sm:px-[6%] py-10 sm:py-14">
   <h2 class="sr-only">Key information cards</h2>
 
   <article class="bg-[#F6FAFF] rounded-[14px] p-6 sm:p-8 md:p-10 shadow-card text-left">
     <h3 class="text-[clamp(18px,2.1vw,22px)] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">EMERGENCIES</h3>
     <p class="text-[clamp(14px,1.45vw,14px)] text-[#6c7a90] mb-4 sm:mb-6">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </p>
     <button class="mx-auto block bg-blueMain text-white rounded-[10px] px-[20px] sm:px-[22px] py-[12px] text-[13px] font-bold transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">MORE INFO</button>
   </article>
@@ -280,13 +306,13 @@
   <article class="bg-[#F6FAFF] rounded-[14px] p-6 sm:p-8 md:p-10 shadow-card text-left">
     <h3 class="text-[clamp(18px,2.1vw,22px)] font-extrabold uppercase tracking-[.04em] text-center mb-4 sm:mb-6">TEST RESULTS</h3>
     <p class="text-[clamp(14px,1.45vw,14px)] text-[#6c7a90] mb-4 sm:mb-6">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
     </p>
     <button class="mx-auto block bg-blueMain text-white rounded-[10px] px-[20px] sm:px-[22px] py-[12px] text-[13px] font-bold transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]">CHECK TEST</button>
   </article>
 </section>
 
-<!-- ===== DOCTORS ===== -->
+
 <section class="site pt-10 sm:pt-[72px] px-4 sm:px-[6%]" id="doctors">
   <h2 class="text-[clamp(28px,5vw,48px)] leading-[1.12] sm:leading-[1.08] md:leading-[1.05] font-extrabold tracking-[-.2px] sm:tracking-[-.25px] md:tracking-[-.3px] mb-6 sm:mb-8 md:mb-9 pl-0 md:pl-10">Doctors</h2>
 
@@ -308,51 +334,48 @@
     <div id="doctorsScroll"
          class="overflow-x-auto overflow-y-hidden py-[12px] sm:py-[14px] mb-1.5 overscroll-contain cursor-grab select-none [scrollbar-width:none] [-ms-overflow-style:none] no-scrollbar">
       <div class="flex flex-nowrap doctors-gap gap-6 sm:gap-8 md:gap-10 px-1 pb-1.5 scroll-smooth">
-        <!-- Картка 1 -->
-        <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
+        
+        <article id="doc-phillis" class="doctor-card flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
             <img src="images/doctor1.png" alt="Phillis K Vance MD" class="relative z-[1] w-[74px] h-[74px] sm:w-[84px] sm:h-[84px] rounded-full object-cover m-[3px] pointer-events-none">
           </div>
           <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3">
             <h3 class="text-[18px] sm:text-[20px] font-semibold">Phillis K Vance MD</h3>
-            <span role="button" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Family Medicine</span>
+            <span role="button" data-spec="family" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Family Medicine</span>
           </div>
         </article>
 
-        <!-- Картка 2 -->
-        <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
+        <article id="doc-stanley" class="doctor-card flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
             <img src="images/doctor2.png" alt="Stanley K Hudson MD" class="relative z-[1] w-[74px] h-[74px] sm:w-[84px] sm:h-[84px] rounded-full object-cover m-[3px] pointer-events-none">
           </div>
           <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3">
             <h3 class="text-[18px] sm:text-[20px] font-semibold">Stanley K Hudson MD</h3>
-            <span role="button" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Internal Medicine</span>
+            <span role="button" data-spec="internal" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Internal Medicine</span>
           </div>
         </article>
 
-        <!-- Картка 3 -->
-        <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
+        <article id="doc-kevin" class="doctor-card flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
             <img src="images/doctor3.png" alt="Kevin D Malone MD" class="relative z-[1] w-[74px] h-[74px] sm:w-[84px] sm:h-[84px] rounded-full object-cover m-[3px] pointer-events-none">
           </div>
           <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3">
             <h3 class="text-[18px] sm:text-[20px] font-semibold">Kevin D Malone MD</h3>
-            <span role="button" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Cardiology</span>
+            <span role="button" data-spec="cardio" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Cardiology</span>
           </div>
         </article>
 
-        <!-- Картка 4 -->
-        <article class="flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
+        <article id="doc-angela" class="doctor-card flex-none bg-[#F6FAFF] rounded-[14px] p-7 sm:p-8 md:p-9 shadow-card flex items-center justify-center gap-4 sm:gap-5 min-w-[280px] sm:min-w-[320px] mdx:min-w-[380px] lgx:min-w-[480px]">
           <div class="relative w-[80px] h-[80px] sm:w-[90px] sm:h-[90px] shrink-0">
             <span class="absolute inset-0 rounded-full" style="background:#EAF1FB"></span>
             <img src="images/doctor4.png" alt="Angela S Martin MD" class="relative z-[1] w-[74px] h-[74px] sm:w-[84px] sm:h-[84px] rounded-full object-cover m-[3px] pointer-events-none">
           </div>
           <div class="flex flex-col items-center text-center gap-2.5 sm:gap-3">
             <h3 class="text-[18px] sm:text-[20px] font-semibold">Angela S Martin MD</h3>
-            <span role="button" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Physical Therapy</span>
+            <span role="button" data-spec="physical" class="inline-flex items-center justify-center h-9 sm:h-10 px-3.5 sm:px-4 bg-[#2F3342] text-white text-[13px] sm:text-[14px] font-bold leading-none rounded-[10px] cursor-pointer transition-all duration-150 hover:shadow-btn hover:scale-[1.03]">Physical Therapy</span>
           </div>
         </article>
       </div>
@@ -391,38 +414,42 @@
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">SERVICES</h6>
       <ul class="list-none">
-        <li class="text-[13px] text-ink/92 my-[10px]">Family Medicine</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Internal Medicine</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Cardiology</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Physical Therapy</li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-service" data-target-card="doc-phillis" data-spec="family">Family Medicine</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-service" data-target-card="doc-stanley" data-spec="internal">Internal Medicine</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-service" data-target-card="doc-kevin" data-spec="cardio">Cardiology</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-service" data-target-card="doc-angela" data-spec="physical">Physical Therapy</a></li>
       </ul>
     </div>
 
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">DOCTORS</h6>
       <ul class="list-none">
-        <li class="text-[13px] text-ink/92 my-[10px]">Phillis K Vance MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Stanley K Hudson  MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Kevin D Malone MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Angela S Martin MD</li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-doc" data-doc-target="doc-phillis">Phillis K Vance MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-doc" data-doc-target="doc-stanley">Stanley K Hudson  MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-doc" data-doc-target="doc-kevin">Kevin D Malone MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="#doctors" class="footer-doc" data-doc-target="doc-angela">Angela S Martin MD</a></li>
       </ul>
     </div>
 
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">CONTACT</h6>
-      <button class="inline-flex items-center gap-2 h-11 px-[18px] bg-blueMain text-white rounded-[10px] font-extrabold text-[14px] shadow-btn transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]" type="button" aria-label="Call (404)123 - 4567">
+      
+      <a id="footer-contact-btn"
+         href="tel:+14041234567"
+         class="inline-flex items-center gap-2 h-11 px-[18px] bg-blueMain text-white rounded-[10px] font-extrabold text-[14px] shadow-btn transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]"
+         aria-label="Call +1 (404) 123-4567" role="button">
         <svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12 .86.34 1.7.64 2.5a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.67-1.25a2 2 0 0 1 2.11-.45c.8 .3 1.64 .52 2.5 .64A2 2 0 0 1 22 16.92z"/>
         </svg>
         (404)123 - 4567
-      </button>
+      </a>
     </div>
   </div>
 </footer>
 
 <!-- ===== JS ===== -->
 <script>
-/* Desktop DOCTORS dropdown */
+
 (function(){
   const toggle = document.getElementById('doctors-toggle-desktop');
   const dd = document.getElementById('doctorsDropdownDesktop');
@@ -439,7 +466,7 @@
   }
 })();
 
-/* Fullscreen Mobile Overlay */
+
 (function(){
   const burger = document.getElementById('mobile-menu-button');
   const overlay = document.getElementById('mobile-overlay');
@@ -484,10 +511,12 @@
       });
     });
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+    window.__closeOverlay = close;
   }
 })();
 
-/* Doctors scroller */
+
 (function(){
   const scroller = document.getElementById('doctorsScroll');
   if(!scroller) return;
@@ -509,6 +538,134 @@
     const dir=Number(b.dataset.dir||1);
     scroller.scrollBy({left:dir*step(),behavior:'smooth'});
   }));
+})();
+
+
+(function(){
+  const scroller = document.getElementById('doctorsScroll');
+  const doctorsSection = document.getElementById('doctors');
+
+  function scrollToCard(cardId){
+    const card = document.getElementById(cardId);
+    if(!card || !scroller) return;
+    doctorsSection?.scrollIntoView({behavior:'smooth', block:'start'});
+    const left = card.offsetLeft - 8;
+    setTimeout(()=> scroller.scrollTo({left, behavior:'smooth'}), 100);
+    return card;
+  }
+
+  function flashPill(pill){
+    if(!pill) return;
+    pill.classList.remove('pill-flash');
+    void pill.offsetWidth;
+    pill.classList.add('pill-flash');
+    pill.addEventListener('animationend', ()=> pill.classList.remove('pill-flash'), {once:true});
+    setTimeout(()=>pill.classList.remove('pill-flash'), 1200);
+  }
+
+  document.querySelectorAll('a.footer-service').forEach(link=>{
+    link.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const cardId = link.getAttribute('data-target-card');
+      const spec   = link.getAttribute('data-spec');
+      const card = scrollToCard(cardId);
+      setTimeout(()=>{
+        const pill = card?.querySelector('[data-spec="'+spec+'"]');
+        flashPill(pill);
+      }, 280);
+    });
+  });
+})();
+
+
+(function(){
+  const footerEl   = document.querySelector('footer');
+  const contactBtn = document.getElementById('footer-contact-btn');
+
+  function scrollToFooter(){
+    footerEl?.scrollIntoView({ behavior:'smooth', block:'start' });
+    if (contactBtn) {
+      contactBtn.classList.remove('flash');
+      void contactBtn.offsetWidth;
+      contactBtn.classList.add('flash');
+      setTimeout(()=>contactBtn.classList.remove('flash'), 900);
+    }
+  }
+
+  
+  const desktopLink = document.getElementById('nav-services-desktop');
+  if (desktopLink) {
+    desktopLink.addEventListener('click', (e)=>{
+      e.preventDefault();
+      scrollToFooter();
+    });
+  }
+
+  
+  const mobileServicesBtn = document.querySelector('#mobile-overlay .menu-link.js-noop');
+  if (mobileServicesBtn) {
+    mobileServicesBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      scrollToFooter();
+      if (window.__closeOverlay) window.__closeOverlay();
+    });
+  }
+})();
+
+
+(function(){
+  const scroller = document.getElementById('doctorsScroll');
+
+  function highlightCard(card){
+    if(!card) return;
+    card.classList.remove('is-highlight');
+    void card.offsetWidth;
+    card.classList.add('is-highlight');
+    setTimeout(()=> card.classList.remove('is-highlight'), 900);
+  }
+
+  function scrollToDoctor(cardId){
+    const card = document.getElementById(cardId);
+    if(!card || !scroller) return;
+
+    const doctorsSection = document.getElementById('doctors');
+    doctorsSection?.scrollIntoView({behavior:'smooth', block:'start'});
+
+    const left = card.offsetLeft - 8;
+    setTimeout(()=>{
+      scroller.scrollTo({left, behavior:'smooth'});
+      highlightCard(card);
+    }, 100);
+  }
+
+  document.querySelectorAll('a.footer-doc').forEach(a=>{
+    a.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const id = a.getAttribute('data-doc-target');
+      if(id) scrollToDoctor(id);
+    });
+  });
+
+  const dd = document.getElementById('doctorsDropdownDesktop');
+  if(dd){
+    dd.querySelectorAll('button[data-doc-target]').forEach(btn=>{
+      btn.addEventListener('click',(e)=>{
+        e.preventDefault();
+        const id = btn.getAttribute('data-doc-target');
+        if(id) scrollToDoctor(id);
+        dd.classList.add('hidden');
+      });
+    });
+  }
+
+  document.querySelectorAll('.doc-pill[data-doc-target]').forEach(pill=>{
+    pill.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const id = pill.getAttribute('data-doc-target');
+      if(id) scrollToDoctor(id);
+      if (window.__closeOverlay) window.__closeOverlay();
+    });
+  });
 })();
 </script>
 

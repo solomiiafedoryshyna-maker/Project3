@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -38,7 +38,7 @@
 </script>
 
 <style>
-  /* Головний fluid-контейнер до 1747px */
+  
   .site{min-width:300px;width:100%;max-width:1747px;margin:0 auto}
   html,body{overflow-x:hidden}
 
@@ -79,46 +79,77 @@
   .panel-leave{opacity:1; transform:translateY(0)}
   .panel-leave-active{opacity:0; transform:translateY(6px); transition:opacity .18s ease, transform .18s ease}
 
-  /* ===== АДАПТИВ ДЛЯ ХЕДЕРА (ВСЕ ПЛАВНО 300–1747px) ===== */
-  /* 1) Розмір логотипу/вордмарку плавний */
+  
   .brand-tight{font-size:clamp(17px,1.8vw,20px); letter-spacing:.05px}
-  /* 2) Навігація — шрифт і проміжки плавні, без переносу */
   .header-nav{gap:clamp(12px,2.2vw,36px); flex-wrap:nowrap}
   .header-nav a.nav-link{
     font-size:clamp(11px,1.15vw,13px);
     letter-spacing:.02em;
-    white-space:nowrap;               /* не переносити пункти */
+    white-space:nowrap;
   }
-  /* 3) Кнопки справа — теж плавно стискаються */
   .btn-compact{
     height:clamp(34px,3.6vw,40px);
     padding:clamp(6px,.6vw,8px) clamp(10px,1.1vw,16px);
     font-size:clamp(11px,1.05vw,13px);
   }
-  /* 4) Падінги хедера трохи стискаються на вузьких desktop */
   @media (min-width:780px){
     header.site{padding-left:clamp(16px,3.2vw,64px); padding-right:clamp(16px,3.2vw,64px)}
   }
 
-  /* Дуже вузькі екрани */
   @media (max-width:360px){
     .px-4{padding-left:12px!important; padding-right:12px!important}
     .py-3{padding-top:10px!important; padding-bottom:10px!important}
     .brand-tight{font-size:16px!important}
   }
 
-  /* Після 1747px: контент не ширшає — лише «дихають» відступи */
   @media (min-width:1747px){
     header.site, section.site, footer .site{
       padding-left:clamp(16px,4vw,80px);
       padding-right:clamp(16px,4vw,80px);
     }
   }
+
+  
+  .footer-doc{ text-decoration:none; cursor:pointer }
+  .footer-doc:hover{ text-decoration:underline; text-underline-offset:2px }
+  .footer-service{ text-decoration:none; cursor:pointer }
+  .footer-service:hover{ text-decoration:underline; text-underline-offset:2px }
+
+  
+  @keyframes contactFlash {
+    0%   { transform: scale(1);   box-shadow: 0 10px 24px rgba(59,130,246,.25), 0 0 0 0 rgba(59,130,246,0); }
+    35%  { transform: scale(1.03); box-shadow: 0 14px 34px rgba(59,130,246,.35), 0 0 0 6px rgba(59,130,246,.30); }
+    100% { transform: scale(1);   box-shadow: 0 10px 24px rgba(59,130,246,.25), 0 0 0 0 rgba(59,130,246,0); }
+  }
+  #footer-contact-btn.flash{ animation: contactFlash .9s ease-out 1; }
+
+  
+  @keyframes pillFlash {
+    0%   {
+      transform: scale(1);
+      box-shadow:
+        0 10px 24px rgba(59,130,246,0.25),
+        0 0 0 0 rgba(59,130,246,0);
+    }
+    35%  {
+      transform: scale(1.04);
+      box-shadow:
+        0 14px 34px rgba(59,130,246,0.35),
+        0 0 0 6px rgba(59,130,246,0.30);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow:
+        0 10px 24px rgba(59,130,246,0.25),
+        0 0 0 0 rgba(59,130,246,0);
+    }
+  }
+  .pill-flash{ animation: pillFlash .9s ease-out 1; }
 </style>
 </head>
 <body class="font-sans text-ink bg-white leading-[1.6]">
 
-<!-- ===== FULL-WIDTH STICKY HEADER ===== -->
+
 <div class="sticky top-0 z-50 bg-blueMain">
   <div class="site">
     <header
@@ -128,7 +159,7 @@
              flex items-center justify-between
              md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-0 overflow-x-visible">
 
-      <!-- Лого -->
+      
       <div class="flex items-center gap-3 min-w-0">
         <svg class="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 64 64" aria-hidden="true">
           <circle cx="22" cy="18" r="6" fill="#fff"/>
@@ -145,30 +176,66 @@
       <nav class="header-nav hidden md:flex justify-center items-center">
         <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="index.html">HOME</a>
         <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="about.html">ABOUT</a>
-        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">SERVICES</a>
+        
+        <a id="nav-services-desktop" class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">SERVICES</a>
 
         <div class="relative inline-flex items-center">
           <a href="#" id="doctors-toggle-desktop" class="nav-link text-white font-semibold cursor-pointer select-none hover:opacity-90">DOCTORS</a>
+
+          
           <div id="doctorsDropdownDesktop"
-               class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(240px,92vw)] z-[100] animate-fade">
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</button>
-            <button class="w-full bg-blueMain text-white font-semibold text-[13px] leading-none px-4 py-3 my-1.5 rounded-[12px] border-2 border-transparent text-center shadow-pill transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</button>
+               class="hidden absolute top-[34px] left-1/2 -translate-x-1/2 w-[min(260px,92vw)] z-[100] animate-fade bg-transparent shadow-none border-0">
+            <div class="flex flex-col gap-2">
+              <a href="index.html#doctors"
+                 class="block w-full rounded-[14px] bg-blueMain text-white font-extrabold text-[13px] leading-none
+                        px-4 py-3 text-center border-2 border-transparent
+                        shadow-[0_10px_24px_rgba(59,130,246,.25)]
+                        transition-all duration-150
+                        hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">
+                Phillis K Vance MD
+              </a>
+              <a href="index.html#doctors"
+                 class="block w-full rounded-[14px] bg-blueMain text-white font-extrabold text-[13px] leading-none
+                        px-4 py-3 text-center border-2 border-transparent
+                        shadow-[0_10px_24px_rgba(59,130,246,.25)]
+                        transition-all duration-150
+                        hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">
+                Stanley K Hudson MD
+              </a>
+              <a href="index.html#doctors"
+                 class="block w-full rounded-[14px] bg-blueMain text-white font-extrabold text-[13px] leading-none
+                        px-4 py-3 text-center border-2 border-transparent
+                        shadow-[0_10px_24px_rgba(59,130,246,.25)]
+                        transition-all duration-150
+                        hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">
+                Kevin D Malone MD
+              </a>
+              <a href="index.html#doctors"
+                 class="block w-full rounded-[14px] bg-blueMain text-white font-extrabold text-[13px] leading-none
+                        px-4 py-3 text-center border-2 border-transparent
+                        shadow-[0_10px_24px_rgba(59,130,246,.25)]
+                        transition-all duration-150
+                        hover:bg-white hover:text-blueMain hover:border-blueMain hover:-translate-y-[1px]">
+                Angela S Martin MD
+              </a>
+            </div>
           </div>
         </div>
 
-        <a class="nav-link text-white font-semibold no-underline hover:opacity-90" href="#">CONTACT</a>
+        
+        <a class="nav-link text-white font-semibold no-underline hover:opacity-90"
+           href="tel:+14041234567" id="contact-link-desktop"
+           aria-label="Call +1 (404) 123-4567">CONTACT</a>
       </nav>
 
-      <!-- Правий блок: кнопки + бургер -->
+      
       <div class="right-cta flex gap-2 justify-end items-center">
         <div class="hidden md:flex gap-2">
           <button class="btn-compact rounded-[10px] border-2 border-white/35 bg-transparent text-white font-bold transition-all duration-150 hover:bg-white hover:text-blueMain hover:border-white hover:shadow-btn hover:scale-[1.03]">LOG IN</button>
           <button class="btn-compact rounded-[10px] bg-white text-blueMain font-bold transition-all duration-150 hover:bg-blueHover hover:text-white hover:shadow-btn hover:scale-[1.03]">SIGN UP</button>
         </div>
 
-        <!-- Бургер -->
+        
         <button id="mobile-menu-button"
                 class="md:hidden text-white no-focus flex items-center justify-center w-10 h-10 rounded-[10px] active:scale-[.98]"
                 aria-label="Open menu" aria-expanded="false" aria-controls="mobile-overlay">
@@ -181,7 +248,7 @@
   </div>
 </div>
 
-<!-- ===== FULLSCREEN MOBILE OVERLAY ===== -->
+
 <div id="mobile-overlay" class="fixed inset-0 z-[60] hidden">
   <div id="overlay-backdrop" class="absolute inset-0 bg-black/30 opacity-0 transition-opacity duration-200"></div>
 
@@ -210,6 +277,7 @@
           <ul class="flex flex-col gap-4 sm:gap-5">
             <li><a href="index.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">HOME</a></li>
             <li><a href="about.html" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]">ABOUT</a></li>
+            
             <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">SERVICES</button></li>
             <li>
               <details class="group">
@@ -217,14 +285,14 @@
                   DOCTORS
                 </summary>
                 <div class="px-2 pt-2">
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</a>
-                  <a href="#" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</a>
+                  <a href="index.html#doctors" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Phillis K Vance MD</a>
+                  <a href="index.html#doctors" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Stanley K Hudson MD</a>
+                  <a href="index.html#doctors" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Kevin D Malone MD</a>
+                  <a href="index.html#doctors" class="doc-pill block px-3 py-2 text-[13px] rounded-[10px] bg-white text-blueMain font-semibold my-1 wrap-anywhere transition-all duration-150 hover:bg-white/90 hover:-translate-y-[1px] hover:shadow-btn">Angela S Martin MD</a>
                 </div>
               </details>
             </li>
-            <li><button type="button" class="menu-link no-focus js-noop block w-full text-left px-2 py-2 text-[16px] font-semibold rounded-[10px]">CONTACT</button></li>
+            <li><a href="tel:+14041234567" id="contact-link-mobile" class="menu-link block px-2 py-2 text-[16px] font-semibold rounded-[10px]" aria-label="Call +1 (404) 123-4567">CONTACT</a></li>
           </ul>
 
           <div class="mt-6 grid grid-cols-2 gap-2 pb-2">
@@ -237,7 +305,7 @@
   </nav>
 </div>
 
-<!-- ===== CONTENT ===== -->
+
 <section class="site py-12 sm:py-16 md:py-20 px-4 sm:px-[6%] bg-white">
   <div class="w-full">
     <h1 class="hero-title text-[clamp(30px,5.2vw,56px)] font-extrabold mb-2 sm:mb-3">About HealthSpecialist</h1>
@@ -305,7 +373,7 @@
   </div>
 </section>
 
-<!-- ===== OUR STORY (full-width blue like header/footer) ===== -->
+
 <div class="w-full bg-[#F7FAFF]">
   <section class="site py-12 sm:py-16 md:py-20 px-4 sm:px-[6%]" id="our-story">
     <div class="grid md:grid-cols-[1.2fr_0.8fr] gap-[40px] sm:gap-[60px] md:gap-[80px] items-center">
@@ -400,38 +468,41 @@
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">SERVICES</h6>
       <ul class="list-none">
-        <li class="text-[13px] text-ink/92 my-[10px]">Family Medicine</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Internal Medicine</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Cardiology</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Physical Therapy</li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-service">Family Medicine</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-service">Internal Medicine</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-service">Cardiology</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-service">Physical Therapy</a></li>
       </ul>
     </div>
 
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">DOCTORS</h6>
       <ul class="list-none">
-        <li class="text-[13px] text-ink/92 my-[10px]">Phillis K Vance MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Stanley K Hudson  MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Kevin D Malone MD</li>
-        <li class="text-[13px] text-ink/92 my-[10px]">Angela S Martin MD</li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-doc">Phillis K Vance MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-doc">Stanley K Hudson  MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-doc">Kevin D Malone MD</a></li>
+        <li class="text-[13px] text-ink/92 my-[10px]"><a href="index.html#doctors" class="footer-doc">Angela S Martin MD</a></li>
       </ul>
     </div>
 
     <div>
       <h6 class="text-[13px] sm:text-[14px] uppercase font-extrabold tracking-[.05em] mb-4">CONTACT</h6>
-      <button class="inline-flex items-center gap-2 h-11 px-[18px] bg-blueMain text-white rounded-[10px] font-extrabold text-[14px] shadow-btn transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]" type="button" aria-label="Call (404)123 - 4567">
+      <a id="footer-contact-btn"
+         href="tel:+14041234567"
+         class="inline-flex items-center gap-2 h-11 px-[18px] bg-blueMain text-white rounded-[10px] font-extrabold text-[14px] shadow-btn transition-all duration-150 hover:bg-blueHover hover:shadow-btn hover:scale-[1.03]"
+         aria-label="Call (404)123 - 4567" role="button">
         <svg viewBox="0 0 24 24" class="w-[18px] h-[18px]" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12 .86.34 1.7.64 2.5a2 2 0 0 1-.45 2.11L8 9a16 16 0 0 0 7 7l.67-1.25a2 2 0 0 1 2.11-.45c.8 .3 1.64 .52 2.5 .64A2 2 0 0 1 22 16.92z"/>
         </svg>
         (404)123 - 4567
-      </button>
+      </a>
     </div>
   </div>
 </footer>
 
 <!-- ===== JS ===== -->
 <script>
-/* Desktop DOCTORS dropdown */
+
 (function(){
   const toggle = document.getElementById('doctors-toggle-desktop');
   const dd = document.getElementById('doctorsDropdownDesktop');
@@ -448,11 +519,11 @@
   }
 })();
 
-/* Fullscreen Mobile Overlay — fade-in */
+
 (function(){
-  const burger = document.getElementById('mobile-menu-button');
-  const overlay = document.getElementById('mobile-overlay');
-  const panel = document.getElementById('overlay-panel');
+  const burger   = document.getElementById('mobile-menu-button');
+  const overlay  = document.getElementById('mobile-overlay');
+  const panel    = document.getElementById('overlay-panel');
   const backdrop = document.getElementById('overlay-backdrop');
   const closeBtn = document.getElementById('overlay-close');
 
@@ -484,15 +555,57 @@
     burger.addEventListener('click', open);
     if (closeBtn) closeBtn.addEventListener('click', close);
     backdrop.addEventListener('click', close);
+
     overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+
     overlay.querySelectorAll('.js-noop').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        return false;
       });
     });
+
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+    window.__closeOverlay = close;
+  }
+})();
+
+
+(function(){
+  const footerEl   = document.querySelector('footer');
+  const contactBtn = document.getElementById('footer-contact-btn');
+
+  function scrollToFooter(){
+    if (footerEl) {
+      footerEl.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+    if (contactBtn) {
+      contactBtn.classList.remove('flash');
+      void contactBtn.offsetWidth;
+      contactBtn.classList.add('flash');
+      setTimeout(()=>contactBtn.classList.remove('flash'), 900);
+    }
+  }
+
+  
+  const desktopLink = document.getElementById('nav-services-desktop');
+  if (desktopLink) {
+    desktopLink.addEventListener('click', (e)=>{
+      e.preventDefault();
+      scrollToFooter();
+    });
+  }
+
+  
+  const mobileServicesBtn = document.querySelector('#mobile-overlay .menu-link.js-noop');
+  if (mobileServicesBtn) {
+    mobileServicesBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if (window.__closeOverlay) {
+        window.__closeOverlay();
+      }
+      setTimeout(scrollToFooter, 230);
+    });
   }
 })();
 </script>
